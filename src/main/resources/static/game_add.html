@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Games</title>
+</head>
+<body>
+<h1>Добавление игры</h1>
+<form method="post" action="/games">
+    <label>Название:
+        <input required style="width: 400px" name="name" placeholder="The Last of Us">
+    </label>
+    <br>
+    <br>
+    <label>Оценка Metacritic:
+        <input style="width: 30px;margin-right: 30px" name="mcScore" placeholder="95">
+    </label>
+    <label>Инди:
+        <input type="checkbox" id="isIndie" name="isIndie" value="true">
+        <label for="isIndie"> </label>
+    </label>
+    <br>
+    <br>
+    <label>Цена:
+        <input required style="width: 50px" name="price" placeholder="59.99"> $
+    </label>
+    <label style="margin-left: 30px">Платформа:
+        <label>PS4
+            <input type="checkbox" id="platformPS4" name="platformPS4" value="PS4">
+            <label for="platformPS4"> </label>
+        </label>
+        <label>PS5
+            <input type="checkbox" id="platformPS5" name="platformPS5" value="PS5">
+            <label for="platformPS5"> </label>
+        </label>
+        <label>PC
+            <input type="checkbox" id="platformPC" name="platformPC" value="PC">
+            <label for="platformPC"> </label>
+        </label>
+    </label>
+    <br>
+    <br>
+    <label>Путь к файлу с постером:
+        <input required type="file" name="poster">
+    </label>
+    <br>
+    <br>
+    <label>Описание:
+        <input style="width: 400px; height: 100px" type="text" name="description">
+    </label>
+    <br>
+    <br>
+    <label>Ссылка на встраиваемое видео YouTube:
+        <br>
+        <input style="width: 400px" name="youtube-link" placeholder="https://www.youtube.com/embed/W01L70IGBgE">
+    </label>
+    <br>
+    <br>
+    <label>Разработчик:
+        <input name="developer" placeholder="Naughty Dog">
+    </label>
+    <label>Издатель:
+        <input style="width: 200px" name="publisher" placeholder="Sony Computer Entertainment">
+    </label>
+    <br>
+    <br>
+    <label>Дата релиза:
+        <input required type="date" pattern="dd-mm-yyyy" name="releaseDate">
+    </label>
+    <br>
+    <br>
+    <label>Сеттинг:
+        <input name="setting" placeholder="Постапокалипсис">
+    </label>
+    <br>
+    <br>
+    <label>Основной жанр:
+        <input name="mainGenre" placeholder="Приключенческий боевик">
+    </label>
+    <br>
+    <br>
+    <label>Второстепенные жанры:
+        <input name="sideGenre1" placeholder="Хоррор">
+        <input name="sideGenre2" placeholder="Выживание">
+    </label>
+    <br>
+    <br>
+    <h3>
+        Системные требования:
+    </h3>
+    <label>Процессор:
+        <input style="width: 400px" name="processor" placeholder="Intel® Core™ i7-4770K / AMD Ryzen 5 1500X">
+    </label>
+    <br>
+    <br>
+    <label>Видеокарта:
+        <input style="width: 400px" name="graphicsCard"
+               placeholder="Nvidia GeForce GTX 1060 6GB / AMD Radeon RX 480 4GB">
+    </label>
+    <br>
+    <br>
+    <label>Оперативная память:
+        <input style="width: 30px" name="ram"
+               placeholder="12">GB
+    </label>
+    <label style="margin-left: 30px">Место на диске:
+        <input style="width: 30px" name="freeMemory"
+               placeholder="150"> GB
+    </label>
+    <br>
+    <br>
+    <input type="submit" value="Добавить игру">
+</form>
+</body>
+</html>
