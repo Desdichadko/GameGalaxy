@@ -13,28 +13,28 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 public class Game {
-    private Integer id;
+    private Long id;
     private String name;
     private BigDecimal price;
-    private String poster;
-    private String description;
-    private String platforms;
-    private String youtubeLink;
-    private Double mcScore;
-    private Double userScore;
-    private Double overallScore;
-    private String developer;
-    private String publisher;
-    private LocalDate releaseDate;
-    private String setting;
-    private String mainGenre;
-    private String sideGenre1;
-    private String sideGenre2;
-    private Boolean isIndie;
-    private String processor;
-    private String graphicsCard;
-    private Integer ram;
-    private Double freeMemory;
+//    private String poster;
+//    private String description;
+//    private String platforms;
+//    private String youtubeLink;
+//    private Double mcScore;
+//    private Double userScore;
+//    private Double overallScore;
+//    private String developer;
+//    private String publisher;
+//    private LocalDate releaseDate;
+//    private String setting;
+//    private String mainGenre;
+//    private String sideGenre1;
+//    private String sideGenre2;
+//    private Boolean isIndie;
+//    private String processor;
+//    private String graphicsCard;
+//    private Integer ram;
+//    private Double freeMemory;
 }
 
 

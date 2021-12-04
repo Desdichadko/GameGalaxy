@@ -1,20 +1,18 @@
 package ru.pcs.web.gamegalaxy.dto;
 
-import freemarker.template.utility.StringUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Data
@@ -46,6 +44,12 @@ public class GameDto {
     private String ram;
     private String freeMemory;
 
+    public BigDecimal getPrice() {
+        return StringUtils.isBlank(price) ? null : new BigDecimal(price);
+    }
+    public String getDescription() {
+        return getStringValueOrNull(description);
+    }
 
     public String getPlatforms(){
         StringBuilder result = new StringBuilder();
@@ -68,12 +72,8 @@ public class GameDto {
         return StringUtils.isBlank(result) ? null : result.toString();
     }
 
-    public BigDecimal getPrice() {
-        return StringUtils.isBlank(price) ? null : new BigDecimal(price);
-    }
-
-    public String getDescription() {
-        return getStringValueOrNull(description);
+    public String getYoutubeLink(){
+        return getStringValueOrNull(youtubeLink);
     }
 
     public Boolean getIsIndie(){
@@ -154,10 +154,4 @@ public class GameDto {
     private Double getDoubleValueOrNull(String string) {
         return StringUtils.isBlank(string) ? null : Double.parseDouble(string);
     }
-
-
-
-
-
-
 }

@@ -1,9 +1,11 @@
 package ru.pcs.web.gamegalaxy.repositories;
 
-import ru.pcs.web.gamegalaxy.models.Game;
+import org.springframework.data.jpa.repository.JpaRepository;
+import ru.pcs.web.gamegalaxy.entities.Game;
 
-public interface GamesRepository {
 
-    void add(Game game);
+public interface GamesRepository extends JpaRepository<Game, Long> {
+
+//    List<Game> findAll();
 
 }

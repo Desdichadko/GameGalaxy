@@ -32,7 +32,7 @@ CREATE TABLE games
     price         DECIMAL(12,2) NOT NULL CHECK ( price > 0 ),
     poster        VARCHAR(1000),
     description   VARCHAR(1000),
-    platform      VARCHAR(20),
+    platforms      VARCHAR(20),
     youtube_link  VARCHAR(1000),
     mc_score      DECIMAL(11, 8) CHECK ( mc_score >= 0 AND mc_score <= 100 ),
     user_score    DECIMAL(11, 8) CHECK ( user_score >= 0 AND user_score <= 100 ),

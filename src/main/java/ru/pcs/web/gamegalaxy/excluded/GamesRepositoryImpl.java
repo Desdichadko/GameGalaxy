@@ -1,11 +1,13 @@
-package ru.pcs.web.gamegalaxy.repositories;
+package ru.pcs.web.gamegalaxy.excluded;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.pcs.web.gamegalaxy.models.Game;
+import ru.pcs.web.gamegalaxy.repositories.GamesRepository;
 
 import javax.sql.DataSource;
+import java.util.List;
 
 @Component
 public class GamesRepositoryImpl implements GamesRepository {
@@ -32,4 +34,7 @@ public class GamesRepositoryImpl implements GamesRepository {
                 game.getSetting(), game.getMainGenre(),game.getSideGenre1(),game.getSideGenre2(),game.getIsIndie(),
                 game.getProcessor(), game.getGraphicsCard(), game.getRam(), game.getFreeMemory());
     }
+
+
+
 }
