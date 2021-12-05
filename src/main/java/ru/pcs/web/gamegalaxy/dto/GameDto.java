@@ -20,6 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class GameDto {
+    private Long id;
     private String name;
     private String price;
     private File poster;
@@ -146,6 +147,7 @@ public class GameDto {
             return null;
         }
     }
+
 
     private String getStringValueOrNull(String string) {
         return StringUtils.isBlank(string) ? null : string;

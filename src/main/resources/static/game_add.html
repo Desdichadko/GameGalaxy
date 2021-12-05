@@ -9,6 +9,10 @@
 </head>
 <body>
 <h1>Добавление игры</h1>
+<form action="/games/">
+    <button type="submit">Назад к списку игр</button>
+</form>
+<br>
 <form method="post" action="/games">
     <label>Название:
         <input required style="width: 400px" name="name" placeholder="The Last of Us">
@@ -107,7 +111,7 @@
                placeholder="12">GB
     </label>
     <label style="margin-left: 30px">Место на диске:
-        <input style="width: 30px" name="freeMemory"
+        <input style="width: 50px" name="freeMemory"
                placeholder="150"> GB
     </label>
     <br>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список всех игр</title>
+</head>
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+<body>
+<h2>Список всех игр</h2>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Название</th>
+        <th>Цена</th>
+        <th>Платформа</th>
+        <th>Студия разработки</th>
+        <th>Дата релиза</th>
+        <th>Действия</th>
+    </tr>
+    <tr th:each="g: ${games}">
+        <td th:text="${g.id}"></td>
+        <td th:text="${g.name}"></td>
+        <td th:text="${g.price} + ${#strings.escapeXml(' $')}"></td>
+        <td th:text="${g.platforms}"></td>
+        <td th:text="${g.developer}"></td>
+        <!--<td th:text="${g.publisher}"></td> -->
+        <td th:text="${{g.releaseDate}}"></td>
+        <td>
+            <form method="post" th:action="@{/games/{id}/delete(id=${g.id})}">
+                <input type="submit" value="Удалить">
+            </form>
+            <!--            <button th:href="@{/games/{id}(id=${g.id})}" name="Подробнее"></button>-->
+            <form th:action="@{/games/{id}/details(id=${g.id})}">
+                <button type="submit">Подробнее</button>
+            </form>
+        </td>
+    </tr>
+</table>
+<br>
+    <form th:action="@{/game_add.html}">
+        <button type="submit">Добавить новую игру</button>
+    </form>
+
+
+</body>
+</html>
