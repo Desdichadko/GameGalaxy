@@ -45,9 +45,11 @@ public class GameDto {
     private String ram;
     private String freeMemory;
 
+
     public BigDecimal getPrice() {
         return StringUtils.isBlank(price) ? null : new BigDecimal(price);
     }
+
     public String getDescription() {
         return getStringValueOrNull(description);
     }
@@ -141,11 +143,15 @@ public class GameDto {
     }
 
     public String getPoster() {
-        try {
-            return poster.getCanonicalPath();
-        } catch (IOException exception) {
-            return null;
-        }
+            try {
+//                File tempFile = new File(poster.getAbsolutePath());
+//                if (tempFile.isFile()) {
+                    return poster.getCanonicalPath();
+//                }
+            }
+            catch (IOException ignore) {};
+//        return oldPoster;
+        return null;
     }
 
 

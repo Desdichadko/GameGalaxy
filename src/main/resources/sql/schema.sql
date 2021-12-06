@@ -3,15 +3,15 @@ CREATE TABLE users
     user_id    BIGSERIAL PRIMARY KEY,
     first_name VARCHAR(50),
     last_name  VARCHAR(50),
-    email      VARCHAR(70),
-    login      VARCHAR(50),
+    email      VARCHAR(70) UNIQUE,
     password   VARCHAR(50)
 );
 
 CREATE TABLE orders
 (
-    order_id    BIGSERIAL PRIMARY KEY,
+    order_id    BIGSERIAL UNIQUE,
     user_id     BIGINT REFERENCES users (user_id),
+    PRIMARY KEY (order_id, user_id),
     created_at  TIMESTAMP,
     status      VARCHAR(50),
     total_price DECIMAL(12,2)
@@ -21,7 +21,7 @@ CREATE TABLE order_items
 (
     game_id  BIGINT REFERENCES games (game_id),
     order_id BIGINT REFERENCES orders (order_id),
-    primary key (game_id, order_id),
+    PRIMARY KEY (game_id, order_id),
     quantity INTEGER
 );
 
@@ -54,9 +54,10 @@ CREATE TABLE games
 
 CREATE TABLE comments
 (
-    comment_id   BIGSERIAL,
+    comment_id   BIGSERIAL UNIQUE,
     game_id      BIGINT REFERENCES games (game_id),
     user_id      BIGINT REFERENCES users (user_id),
+    primary key (comment_id, game_id, user_id),
     published_at TIMESTAMP,
     content      VARCHAR(500)
 );

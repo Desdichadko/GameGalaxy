@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${game.name}"></title>
+</head>
+<body>
+<h2 th:text="${game.name}">Name of the game</h2>
+<form action="/games/">
+    <button type="submit">Назад к списку игр</button>
+</form>
+<br>
+<form>
+    <br>
+    <br>
+    <label>
+                <img style="width:500px" th:src="${game.poster}">
+<!--        <img style="width:500px" src="../img/game_poster_id_3.jpg">-->
+        <label style="color: #009624;font-weight: bold" th:hidden="${!game.isIndie}"> Инди</label>
+        <p>Платформа:
+            <span style="font-weight: bold" th:text="${game.platforms}"></span>
+        </p>
+        <p>Разработчик:
+            <span style="font-weight: bold" th:text="${game.developer}"></span>
+        </p>
+        <p>Издатель:
+            <span style="font-weight: bold" th:text="${game.publisher}"></span>
+        </p>
+        <p>Цена:
+            <span style="font-weight: bold;color: #005da6; font-size: large" th:text="${game.price}"></span>
+        </p>
+    </label>
+    <br>
+    <p>MC:
+        <span style="font-weight: bold" th:text="${game.getMcScore()}"></span>
+    </p>
+    <p>Дата релиза:
+        <span th:text="${{game.releaseDate}}"></span>
+    </p>
+
+    <h4>Описание:</h4>
+    <p th:text="${game.description}">Description</p>
+    <br>
+    <br>
+<!--    <br>-->
+<!--    <label>Сеттинг:-->
+<!--        <input name="setting" th:value="${game.getSetting()}">-->
+<!--    </label>-->
+<!--    <br>-->
+<!--    <br>-->
+<!--    <label>Основной жанр:-->
+<!--        <input name="mainGenre" th:value="${game.getMainGenre()}">-->
+<!--    </label>-->
+<!--    <br>-->
+<!--    <br>-->
+<!--    <label>Второстепенные жанры:-->
+<!--        <input name="sideGenre1" th:value="${game.getSideGenre1()}">-->
+<!--        <input name="sideGenre2" th:value="${game.getSideGenre2()}">-->
+<!--    </label>-->
+<!--    <br>-->
+<!--    <br>-->
+<!--    <h3>-->
+<!--        Системные требования:-->
+<!--    </h3>-->
+<!--    <label>Процессор:-->
+<!--        <input style="width: 400px" name="processor" th:value="${game.getProcessor()}">-->
+<!--    </label>-->
+<!--    <br>-->
+<!--    <br>-->
+<!--    <label>Видеокарта:-->
+<!--        <input style="width: 400px" name="graphicsCard" th:value="${game.getGraphicsCard()}">-->
+<!--    </label>-->
+<!--    <br>-->
+<!--    <br>-->
+<!--    <label>Оперативная память:-->
+<!--        <input style="width: 30px" name="ram" th:value="${game.getRam()}">GB-->
+<!--    </label>-->
+<!--    <label style="margin-left: 30px">Место на диске:-->
+<!--        <input style="width: 50px" name="freeMemory" th:value="${game.getFreeMemory()}"> GB-->
+<!--    </label>-->
+<!--    <br>-->
+<!--    <br>-->
+<!--    <input type="submit" value="Сохранить изменения">-->
+</form>
+</body>
+</html>

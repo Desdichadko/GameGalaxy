@@ -1,7 +1,6 @@
 package ru.pcs.web.gamegalaxy.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.pcs.web.gamegalaxy.dto.GameDto;
@@ -55,9 +54,8 @@ public class GameService {
                 .build();
     }
 
-    public void updateGameInfo(Long id, GameDto gameDto) {
+    public void updateGameInfo(GameDto gameDto) {
         Game game = buildGameFromDto(gameDto);
-        game.setId(id);
         gamesRepository.save(game);
     }
 
@@ -75,6 +73,10 @@ public class GameService {
 
     private List<GameDto> asDto(List<Game> gameList){
         return gameList.stream().map(this::toDto).collect(Collectors.toList());
+    }
+
+    public Game getGameById(Long game_id){
+        return gamesRepository.getById(game_id);
     }
 
 

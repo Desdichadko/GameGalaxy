@@ -44,18 +44,18 @@
         <!--<td th:text="${g.publisher}"></td> -->
         <td th:text="${{g.releaseDate}}"></td>
         <td>
-            <form method="post" th:action="@{/games/{id}/delete(id=${g.id})}">
+            <form method="post" th:action="@{/admin/games/{id}/delete(id=${g.id})}">
                 <input type="submit" value="Удалить">
             </form>
             <!--            <button th:href="@{/games/{id}(id=${g.id})}" name="Подробнее"></button>-->
-            <form th:action="@{/games/{id}/details(id=${g.id})}">
+            <form th:action="@{/admin/games/{id}/details(id=${g.id})}">
                 <button type="submit">Подробнее</button>
             </form>
         </td>
     </tr>
 </table>
 <br>
-    <form th:action="@{/game_add.html}">
+    <form th:action="@{/admin/game_add.html}">
         <button type="submit">Добавить новую игру</button>
     </form>
 
