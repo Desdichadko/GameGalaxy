@@ -22,17 +22,23 @@ public class GamesController {
         this.gameService = gameService;
     }
 
+    // Admin pages
     @GetMapping("/admin/games")
     public String getGamesPage(Model model) {
         List<Game> gameList = gameService.getAllGames();
         model.addAttribute("games", gameList);
-        return "admin-listofgames";
+        return "admin-list-of-games";
     }
 
-    @PostMapping("/admin/games")
+    @PostMapping("/admin/add-new-game")
     public String addGame(GameDto gameDto) {
         gameService.addNewGame(gameDto);
-        return "redirect:/game_add.html";
+        return "redirect:/admin/add-new-game";
+    }
+
+    @GetMapping("/admin/add-new-game")
+    public String getAddNewGamePage(){
+        return "admin-add-new-game";
     }
 
     @PostMapping("/admin/games/{game-id}/delete")
@@ -54,11 +60,24 @@ public class GamesController {
         return "redirect:/admin/games/{game-id}/details/";
     }
 
-    @GetMapping("/games/gamepage{game-id}")
+    @GetMapping("/games/gamepage/{game-id}")
     public String getGamePage(@PathVariable("game-id") Long game_id, Model model){
         Game game = gameService.getGameById(game_id);
+        List<Game> relatedGames = gameService.getAllGames();
         model.addAttribute("game", game);
-        return "game-page";
+        model.addAttribute("relatedGames", relatedGames);
+        return "single-product";
     }
+
+
+    // User pages
+    @GetMapping("/games")
+    public String getAllGamesPage(Model model){
+        List<Game> allGames = gameService.getAllGames();
+        model.addAttribute("allGames", allGames);
+        return "shop";
+    }
+
+
 
 }

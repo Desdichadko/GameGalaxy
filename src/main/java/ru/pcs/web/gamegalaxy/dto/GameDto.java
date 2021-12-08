@@ -54,6 +54,7 @@ public class GameDto {
         return getStringValueOrNull(description);
     }
 
+    // TODO: realise converter https://www.baeldung.com/jpa-attribute-converters
     public String getPlatforms(){
         StringBuilder result = new StringBuilder();
         List<String> listOfPlatforms = new ArrayList<>();
