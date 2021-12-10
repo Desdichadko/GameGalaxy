@@ -8,6 +8,7 @@ import ru.pcs.web.gamegalaxy.entities.Game;
 import ru.pcs.web.gamegalaxy.repositories.GamesRepository;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,8 +60,8 @@ public class GameService {
         gamesRepository.save(game);
     }
 
-    public List<Game> getAllGames(){
-        return gamesRepository.findAll();
+    public List<GameDto> getAllGames(){
+        return asDto(gamesRepository.findAll());
     }
 
     public void deleteGame(Long game_id) {
@@ -113,5 +114,31 @@ public class GameService {
                 .ram(game.getRam() != null ? game.getRam().toString() : null)
                 .freeMemory(game.getFreeMemory() != null ? game.getFreeMemory().toString() : null)
                 .build();
+    }
+
+    public List<GameDto> getGamesByDeveloper(String developer, Long id) {
+        return asDto(gamesRepository.findAllByDeveloperAndIdIsNot(developer, id));
+    }
+
+    /**
+     * Return List of GameDto where with specified main genre and excluded specified game with id
+     * @param genre the genre for search
+     * @param id of GameDto which will be excluded
+     * @return List of GameDto
+     */
+    public List<GameDto> getGamesByGenreExceptId(String genre, Long id) {
+        return asDto(gamesRepository.findAllByMainGenreAndIdIsNot(genre,id));
+    }
+
+    public List<GameDto> getAllGamesWithGenre(String genre) {
+        return asDto(gamesRepository.findAllByMainGenreOrSideGenre1OrSideGenre2(genre,genre,genre));
+    }
+
+    public List<GameDto> getAllGamesByDeveloper(String developer){
+        return asDto(gamesRepository.findAllByDeveloperIgnoreCase(developer));
+    }
+
+    public List<GameDto> getGamesInPriceRange(BigDecimal lPrice, BigDecimal hPrice) {
+        return asDto(gamesRepository.findAllByPriceIsGreaterThanEqualAndPriceIsLessThanEqual(lPrice,hPrice));
     }
 }

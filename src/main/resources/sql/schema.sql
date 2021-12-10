@@ -1,12 +1,12 @@
-CREATE TABLE users
+/*CREATE TABLE users
 (
     user_id    BIGSERIAL PRIMARY KEY,
     first_name VARCHAR(50),
     last_name  VARCHAR(50),
     email      VARCHAR(70) UNIQUE,
     password   VARCHAR(50)
-);
-
+);*/
+/*
 CREATE TABLE orders
 (
     order_id    BIGSERIAL UNIQUE,
@@ -23,7 +23,7 @@ CREATE TABLE order_items
     order_id BIGINT REFERENCES orders (order_id),
     PRIMARY KEY (game_id, order_id),
     quantity INTEGER
-);
+);*/
 
 CREATE TABLE games
 (
@@ -52,7 +52,7 @@ CREATE TABLE games
 );
 
 
-CREATE TABLE comments
+/*CREATE TABLE comments
 (
     comment_id   BIGSERIAL UNIQUE,
     game_id      BIGINT REFERENCES games (game_id),
@@ -61,3 +61,4 @@ CREATE TABLE comments
     published_at TIMESTAMP,
     content      VARCHAR(500)
 );
+*/

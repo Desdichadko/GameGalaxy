@@ -1,5 +1,6 @@
 package ru.pcs.web.gamegalaxy.controller;
 
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,9 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.pcs.web.gamegalaxy.dto.GameDto;
-import ru.pcs.web.gamegalaxy.entities.Game;
 import ru.pcs.web.gamegalaxy.services.GameService;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Controller
@@ -25,7 +26,7 @@ public class GamesController {
     // Admin pages
     @GetMapping("/admin/games")
     public String getGamesPage(Model model) {
-        List<Game> gameList = gameService.getAllGames();
+        List<GameDto> gameList = gameService.getAllGames();
         model.addAttribute("games", gameList);
         return "admin-list-of-games";
     }
@@ -60,24 +61,58 @@ public class GamesController {
         return "redirect:/admin/games/{game-id}/details/";
     }
 
+    // User pages
     @GetMapping("/games/gamepage/{game-id}")
     public String getGamePage(@PathVariable("game-id") Long game_id, Model model){
-        Game game = gameService.getGameById(game_id);
-        List<Game> relatedGames = gameService.getAllGames();
+        GameDto game = gameService.getGameByIdAsDTO(game_id);
+        List<GameDto> relatedGames = gameService.getGamesByGenreExceptId(game.getMainGenre(), game_id);
+        List<GameDto> sameDeveloperGames = gameService.getGamesByDeveloper(game.getDeveloper(), game_id);
         model.addAttribute("game", game);
         model.addAttribute("relatedGames", relatedGames);
+        model.addAttribute("sameDeveloperGames", sameDeveloperGames);
         return "single-product";
     }
 
-
-    // User pages
     @GetMapping("/games")
     public String getAllGamesPage(Model model){
-        List<Game> allGames = gameService.getAllGames();
+        List<GameDto> allGames = gameService.getAllGames();
         model.addAttribute("allGames", allGames);
         return "shop";
     }
 
+    @GetMapping("/games/{game-developer}")
+    public String getGamesByDeveloper(@PathVariable("game-developer") String developer, Model model) {
+        List<GameDto> gameListDto = gameService.getAllGamesByDeveloper(developer.replaceAll("_", " "));
+        model.addAttribute("allGames", gameListDto);
+        return "shop";
+    }
 
+    @GetMapping("/games/sort-by-price")
+    public String sortByPrice(String lowestPrice, String highestPrice, Model model){
+        BigDecimal lPrice;
+        BigDecimal hPrice;
+        if (Strings.isBlank(lowestPrice)) {
+            lPrice = BigDecimal.ZERO;
+        }
+        else {
+            lPrice = BigDecimal.valueOf(Double.parseDouble(lowestPrice));
+        }
+        if (Strings.isBlank(highestPrice)) {
+            hPrice = BigDecimal.valueOf(100_000.);
+        }
+        else {
+            hPrice = BigDecimal.valueOf(Double.parseDouble(highestPrice));
+        }
+        List<GameDto> gameDtoList = gameService.getGamesInPriceRange(lPrice,hPrice);
+        model.addAttribute("allGames", gameDtoList);
+        return "shop";
+    }
+
+    @GetMapping("/games/sort-by-genre")
+    public String sortByGenre(String genre, Model model) {
+        List<GameDto> gameDtoList = gameService.getAllGamesWithGenre(genre);
+        model.addAttribute("allGames", gameDtoList);
+        return "shop";
+    }
 
 }

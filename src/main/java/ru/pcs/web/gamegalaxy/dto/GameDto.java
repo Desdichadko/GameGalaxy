@@ -144,15 +144,7 @@ public class GameDto {
     }
 
     public String getPoster() {
-            try {
-//                File tempFile = new File(poster.getAbsolutePath());
-//                if (tempFile.isFile()) {
-                    return poster.getCanonicalPath();
-//                }
-            }
-            catch (IOException ignore) {};
-//        return oldPoster;
-        return null;
+        return poster.getName();
     }
 
 
