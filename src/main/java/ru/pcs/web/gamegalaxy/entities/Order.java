@@ -1,27 +1,27 @@
 package ru.pcs.web.gamegalaxy.entities;
 
-
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 @Getter
-@EqualsAndHashCode(of = {"created", "client"})
-@ToString(of = {"created", "address", "express", "status"})
+@EqualsAndHashCode(of = {"created", "user"})
+@ToString(of = {"created", "status"})
 @NoArgsConstructor
 @Entity
 @Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long order_id;
 
     @Column(nullable = false)
-    private LocalDateTime created = LocalDateTime.now();
+    private final LocalDateTime created = LocalDateTime.now();
 
     @Column(length = 1, nullable = false)
     @Setter
@@ -32,22 +32,52 @@ public class Order {
 
     @ElementCollection
     @Column(name = "quantity", nullable = false)
-    @MapKeyJoinColumn(name = "item_id")
-    private Map<Item, Integer> items = new HashMap<>();
+    @MapKeyJoinColumn(name = "game_id")
+    private Map<Game, Integer> items = new HashMap<>();
+
+    @Setter
+    @Column(name="total_sum")
+    private BigDecimal totalSum;
 
     public Order(User user) {
         this.user = user;
+        this.totalSum = BigDecimal.ZERO;
     }
 
-    public Map<Item, Integer> getItems() {
+    public void calculateTotalSum(){
+        Map<Game,Integer> currentOrderItems = getItems();
+        BigDecimal sum = new BigDecimal("0.");
+        for (Map.Entry<Game, Integer> item: currentOrderItems.entrySet()) {
+            sum = sum.add(item.getKey().getPrice().multiply(BigDecimal.valueOf(Long.parseLong(item.getValue().toString()))));
+        }
+        setTotalSum(sum);
+    }
+
+    public Map<Game, Integer> getItems() {
         return Collections.unmodifiableMap(items);
     }
 
-    public void addItem(Item item) {
+    public void addItem(Game item) {
         items.merge(item, 1, (v1, v2) -> v1 + v2);
     }
 
-    public void removeItem(Item item) {
+
+/*    public void changeItemValue(Game item) {
         items.computeIfPresent(item, (k, v) -> v > 1 ? v - 1 : null);
+    }*/
+
+    public void removeItem(Game item) {
+        items.remove(item);
     }
+
+    public void changeItemValue(Game item, int value) {
+        items.put(item, value);
+    }
+
+
+//    public BigDecimal getTotalSum() {
+//        calculateTotalSum();
+//        return totalSum;
+//    }
+
 }

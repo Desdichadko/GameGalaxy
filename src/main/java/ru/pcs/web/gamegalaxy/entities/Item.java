@@ -1,3 +1,4 @@
+/*
 package ru.pcs.web.gamegalaxy.entities;
 
 import lombok.EqualsAndHashCode;
@@ -29,4 +30,4 @@ public class Item {
         this.name = name;
         this.price = price;
     }
-}
+}*/

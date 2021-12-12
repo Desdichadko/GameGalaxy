@@ -168,7 +168,8 @@
                 }
             }
         }
-        .pro-details-cart {
+        form {
+        &.pro-details-cart {
             & a {
                 position: relative;
                 padding: 0 55px;
@@ -191,7 +192,7 @@
                     padding: 0 30px;
                 }
             }
-        }
+        } }
     }
     .pro-details-wish-com {
         display: flex;

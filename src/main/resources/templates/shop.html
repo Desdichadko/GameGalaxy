@@ -11,6 +11,7 @@
     <link rel="icon" th:href="@{/images/favicon/favicon.png}" sizes="32x32" />
     <link rel="icon" th:href="@{/images/favicon/favicon.png}" sizes="192x192" />
     <!-- Structured Data  -->
+
     <script type="application/ld+json">
         {
             "@context": "http://game-galaxy.ru",
@@ -58,7 +59,7 @@
                     <!-- Header Logo Start -->
                     <div class="col-auto align-self-center">
                         <div class="header-logo">
-                            <a th:href="shop.html"><img th:src="@{/images/logo/logo.png}" alt="Site Logo" /></a>
+                            <a href="/games"><img th:src="@{/images/logo/logo.png}" alt="Site Logo" /></a>
                         </div>
                     </div>
                     <!-- Header Logo End -->
@@ -70,8 +71,8 @@
                                 <a href="javascript:void(0)" class="header-action-btn search-btn"><i
                                         class="icon-magnifier"></i></a>
                                 <div class="dropdown_search">
-                                    <form class="action-form" action="#">
-                                        <input class="form-control" placeholder="Введите название игры" type="text">
+                                    <form class="action-form" action="/games/search">
+                                        <input class="form-control" name="searchQuery" placeholder="Введите название игры" type="text">
                                         <button class="submit" type="submit"><i class="icon-magnifier"></i></button>
                                     </form>
                                 </div>
@@ -82,13 +83,14 @@
                                         class="icon-user"></i></button>
                                 <ul class="dropdown-menu dropdown-menu-right">
                                     <li><a class="dropdown-item" href="/my-account">Мой аккаунт</a></li>
+                                    <li><a class="dropdown-item" href="/my-account">Войти</a></li>
                                     <li><a class="dropdown-item" href="/my-account/logout">Выйти</a></li>
                                 </ul>
                             </div>
                             <!-- Single Wedge End -->
-                            <a href="#offcanvas-cart" class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">
+                            <a href="/cart" class="header-action-btn header-action-btn-cart">
                                 <i class="icon-handbag"></i>
-                                <span class="header-action-num">01</span>
+<!--                                <span class="header-action-num">01</span>-->
                                 <!-- <span class="cart-amount">€30.00</span> -->
                             </a>
                             <a href="#offcanvas-mobile-menu" class="header-action-btn header-action-btn-menu offcanvas-toggle d-lg-none">
@@ -120,8 +122,8 @@
                                 <a href="javascript:void(0)" class="header-action-btn search-btn"><i
                                         class="icon-magnifier"></i></a>
                                 <div class="dropdown_search">
-                                    <form class="action-form" action="#">
-                                        <input class="form-control" placeholder="Введите название игры" type="text">
+                                    <form class="action-form" action="/games/search">
+                                        <input class="form-control" name="searchQuery" placeholder="Введите название игры" type="text">
                                         <button class="submit" type="submit"><i class="icon-magnifier"></i></button>
                                     </form>
                                 </div>
@@ -166,34 +168,34 @@
                                         <li class="d-flex">
                                             <ul class="d-block">
                                                 <li class="title"><a href="/games">Жанр</a></li>
-                                                <li><a href="/games">Экшен</a></li>
-                                                <li><a href="/games">Приключения</a></li>
-                                                <li><a href="/games">Гонки</a></li>
-                                                <li><a href="/games">Ролевые</a></li>
-                                                <li><a href="/games">Стратегии</a></li>
+                                                <li><form action="/games/sort-by-genre"><label><a><button type="submit">Приключения</button><input type="text" hidden name="genre" value="Приключения"></a></label></form></li>
+                                                <li><form action="/games/sort-by-genre"><label><a><button type="submit">Стратегии</button><input type="text" hidden name="genre" value="Стратегии"></a></label></form></li>
+                                                <li><form action="/games/sort-by-genre"><label><a><button type="submit">Экшен</button><input type="text" hidden name="genre" value="Экшен"></a></label></form></li>
+                                                <li><form action="/games/sort-by-genre"><label><a><button type="submit">Гонки</button><input type="text" hidden name="genre" value="Гонки"></a></label></form></li>
+                                                <li><form action="/games/sort-by-genre"><label><a><button type="submit">Ролевые</button><input type="text" hidden name="genre" value="Ролевые"></a></label></form></li>
                                             </ul>
                                             <ul class="d-block">
                                                 <li class="title"><a href="/games">Издатель</a></li>
-                                                <li><a href="/games">Sony Interactive Entertainment</a></li>
-                                                <li><a href="/games">Square Enix</a></li>
-                                                <li><a href="/games">Bethesda Softworks</a></li>
-                                                <li><a href="/games">2К</a></li>
-                                                <li><a href="/games">Electronic Arts</a></li>
+                                                <li><form action="/games/by-publisher"><label><a><button type="submit">Sony Interactive Entmt</button><input type="text" hidden name="publisher" value="Sony Interactive Entertainment"></a></label></form></li>
+                                                <li><form action="/games/by-publisher"><label><a><button type="submit">Square Enix</button><input type="text" hidden name="publisher" value="Square Enix"></a></label></form></li>
+                                                <li><form action="/games/by-publisher"><label><a><button type="submit">Bethesda Softworks</button><input type="text" hidden name="publisher" value="Bethesda Softworks"></a></label></form></li>
+                                                <li><form action="/games/by-publisher"><label><a><button type="submit">2К</button><input type="text" hidden name="publisher" value="2Кt"></a></label></form></li>
+                                                <li><form action="/games/by-publisher"><label><a><button type="submit">Electronic Arts</button><input type="text" hidden name="publisher" value="Electronic Arts"></a></label></form></li>
                                             </ul>
                                             <ul class="d-block">
                                                 <li class="title"><a href="/games">Разработчик</a></li>
-                                                <li><a href="/games">Naughty Dog</a></li>
-                                                <li><a href="/games">Remedy Entertainment</a></li>
-                                                <li><a href="/games">Respawn Entertainment</a></li>
-                                                <li><a href="/games">DICE</a></li>
-                                                <li><a href="/games">Bethesda Game Studios</a></li>
+                                                <li><form action="/games/by-developer"><label><a><button type="submit">Naughty Dog</button><input type="text" hidden name="developer" value="Naughty Dog"></a></label></form></li>
+                                                <li><form action="/games/by-developer"><label><a><button type="submit">Remedy Entertainment</button><input type="text" hidden name="developer" value="Remedy Entertainment"></a></label></form></li>
+                                                <li><form action="/games/by-developer"><label><a><button type="submit">Respawn Entertainment</button><input type="text" hidden name="developer" value="Respawn Entertainment"></a></label></form></li>
+                                                <li><form action="/games/by-developer"><label><a><button type="submit">DICE</button><input type="text" hidden name="developer" value="DICE"></a></label></form></li>
+                                                <li><form action="/games/by-developer"><label><a><button type="submit">Bethesda Game Studios</button><input type="text" hidden name="developer" value="Bethesda Game Studios"></a></label></form></li>
                                             </ul>
                                             <ul class="d-block">
                                                 <li class="title"><a href="/games">Цена</a></li>
-                                                <li><a href="/games">до 1000 руб.</a></li>
-                                                <li><a href="/games">до 2000 руб.</a></li>
-                                                <li><a href="/games">до 4500 руб.</a></li>
-                                                <li><a href="/games">свыше 4500 руб.</a></li>
+                                                <li><form action="/games/sort-by-price"><label><a><button type="submit">до 1000 руб.</button><input type="text" hidden name="highestPrice" value="1000" /></a></label></form></li>
+                                                <li><form action="/games/sort-by-price"><label><a><button type="submit">до 2000 руб.</button><input type="text" hidden name="highestPrice" value="2000" /></a></label></form></li>
+                                                <li><form action="/games/sort-by-price"><label><a><button type="submit">до 4500 руб.</button><input type="text" hidden name="highestPrice" value="4500" /></a></label></form></li>
+                                                <li><form action="/games/sort-by-price"><label><a><button type="submit">свыше 4500 руб.</button><input type="text" hidden name="lowestPrice" value="4501" /></a></label></form></li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -209,73 +211,7 @@
     </div>
     <!-- Header Area End  -->
 
-    <!-- OffCanvas Cart Start -->
-    <div id="offcanvas-cart" class="offcanvas offcanvas-cart">
-        <div class="inner">
-            <div class="head">
-                <span class="title">Cart</span>
-                <button class="offcanvas-close">×</button>
-            </div>
-            <div class="body customScroll">
-                <ul class="minicart-product-list">
-                    <li>
-                        <a href="single-product.html" class="image"><img src="assets/images/product-image/1.jpg" alt="Cart product Image"></a>
-                        <div class="content">
-                            <a href="single-product.html" class="title">Walnut Cutting Board</a>
-                            <span class="quantity-price">1 x <span class="amount">$91.86</span></span>
-                            <a href="#" class="remove">×</a>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="single-product.html" class="image"><img src="assets/images/product-image/2.jpg" alt="Cart product Image"></a>
-                        <div class="content">
-                            <a href="single-product.html" class="title">Lucky Wooden Elephant</a>
-                            <span class="quantity-price">1 x <span class="amount">$453.28</span></span>
-                            <a href="#" class="remove">×</a>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="single-product.html" class="image"><img src="assets/images/product-image/3.jpg" alt="Cart product Image"></a>
-                        <div class="content">
-                            <a href="single-product.html" class="title">Fish Cut Out Set</a>
-                            <span class="quantity-price">1 x <span class="amount">$87.34</span></span>
-                            <a href="#" class="remove">×</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="foot">
-                <div class="sub-total">
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <td class="text-left">Sub-Total :</td>
-                                <td class="text-right">$523.30</td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Eco Tax (-2.00) :</td>
-                                <td class="text-right">$4.52</td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">VAT (20%) :</td>
-                                <td class="text-right">$104.66</td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Total :</td>
-                                <td class="text-right theme-color">$632.48</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="buttons">
-                    <a href="cart.html" class="btn btn-dark btn-hover-primary mb-6">view cart</a>
-                    <a href="checkout.html" class="btn btn-outline-dark current-btn">checkout</a>
-                </div>
-                <p class="minicart-message">Free Shipping on All Orders Over $100!</p>
-            </div>
-        </div>
-    </div>
-    <!-- OffCanvas Cart End -->
+
 
     <!-- OffCanvas Menu Start -->
     <div id="offcanvas-mobile-menu" class="offcanvas offcanvas-mobile-menu">
@@ -423,7 +359,10 @@
                                         <a th:href="@{/games/gamepage/{id}(id=${game.id})}" class="image">
                                             <img th:src="@{/images/product-image/zoom-image/{fileName}(fileName=${game.poster})}" alt="Product" />
                                         </a>
-                                        <button title="Add To Cart" class=" add-to-cart">В корзину</button>
+                                        <form action="/add-to-cart" method="post">
+                                            <input type="text" hidden name="strGameId" th:value="${game.id}">
+                                            <button title="Add To Cart" type="submit" class=" add-to-cart">В корзину</button>
+                                        </form>
                                     </div>
                                     <div class="content">
                                         <h5 class="title"><a th:href="@{/games/gamepage/{id}(id=${game.id})}" th:text="${game.name}"></a></h5>
@@ -457,19 +396,15 @@
                         <!-- Sidebar single item -->
                         <div class="sidebar-widget">
                             <div class="main-heading">
-                                <h3 class="sidebar-title">Category</h3>
+                                <h3 class="sidebar-title">Основной жанр</h3>
                             </div>
                             <div class="sidebar-widget-category">
                                 <ul>
-                                    <li><a href="#" class="selected">All <span>(4)</span> </a></li>
-                                    <li><a href="#" class="">Accesssories <span>(3)</span> </a></li>
-                                    <li><a href="#" class="">Box <span>(5)</span> </a></li>
-                                    <li><a href="#" class="">chair <span>(2)</span> </a></li>
-                                    <li><a href="#" class="">Deco <span>(6)</span> </a></li>
-                                    <li><a href="#" class="">Furniture <span>(4)</span> </a></li>
-                                    <li><a href="#" class="">Glass <span>(1)</span> </a></li>
-                                    <li><a href="#" class="">Sofa <span>(3)</span> </a></li>
-                                    <li><a href="#" class="">Table <span>(4)</span> </a></li>
+                                    <li><form action="/games/sort-by-genre"><label><a><button type="submit">Приключения</button><input type="text" hidden name="genre" value="Приключения"></a></label></form></li>
+                                    <li><form action="/games/sort-by-genre"><label><a><button type="submit">Стратегии</button><input type="text" hidden name="genre" value="Стратегии"></a></label></form></li>
+                                    <li><form action="/games/sort-by-genre"><label><a><button type="submit">Экшен</button><input type="text" hidden name="genre" value="Экшен"></a></label></form></li>
+                                    <li><form action="/games/sort-by-genre"><label><a><button type="submit">Гонки</button><input type="text" hidden name="genre" value="Гонки"></a></label></form></li>
+                                    <li><form action="/games/sort-by-genre"><label><a><button type="submit">Ролевые</button><input type="text" hidden name="genre" value="Ролевые"></a></label></form></li>
                                 </ul>
                             </div>
                         </div>
@@ -490,7 +425,7 @@
                                     </div>
                                 </form>
                             </div>
-                            <!-- Sidebar single item -->
+                            <!--&lt;!&ndash; Sidebar single item &ndash;&gt;
                             <div class="sidebar-widget">
                                 <h4 class="pro-sidebar-title mt-5">Size</h4>
                                 <div class="sidebar-widget-list">
@@ -525,7 +460,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <!-- Sidebar single item -->
+                            &lt;!&ndash; Sidebar single item &ndash;&gt;
                             <div class="sidebar-widget no-cba">
                                 <h4 class="pro-sidebar-title">Colour</h4>
                                 <div class="sidebar-widget-list">
@@ -559,7 +494,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <!-- Sidebar single item -->
+                            &lt;!&ndash; Sidebar single item &ndash;&gt;
                             <div class="sidebar-widget">
                                 <h4 class="pro-sidebar-title">Brand</h4>
                                 <div class="sidebar-widget-list">
@@ -581,20 +516,18 @@
                                     </ul>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                         <!-- Sidebar single item -->
                         <div class="sidebar-widget tag">
                             <div class="main-heading">
-                                <h3 class="sidebar-title mt-3">Tags</h3>
+                                <h3 class="sidebar-title mt-3">Теги</h3>
                             </div>
                             <div class="sidebar-widget-tag">
                                 <ul>
                                     <li><a href="/games">Все</a></label></li>
-                                    <li><form action="/games/sort-by-genre"><label><a><button type="submit">Приключения</button><input type="text" hidden name="genre" value="Приключения"></a></label></form></li>
-                                    <li><form action="/games/sort-by-genre"><label><a><button type="submit">Экшен</button><input type="text" hidden name="genre" value="Экшен"></a></label></form></li>
-                                    <li><form action="/games/sort-by-genre"><label><a><button type="submit">Гонки</button><input type="text" hidden name="genre" value="Гонки"></a></label></form></li>
-                                    <li><form action="/games/sort-by-genre"><label><a><button type="submit">Ролевые</button><input type="text" hidden name="genre" value="Ролевые"></a></label></form></li>
-                                    <li><form action="/games/sort-by-genre"><label><a><button type="submit">Стратегии</button><input type="text" hidden name="genre" value="Стратегии"></a></label></form></li>
+                                    <li><form action="/games/newer"><label><a><button type="submit">Новинки</button><input type="text" hidden name="date" value="01.01.2020"></a></label></form></li>
+                                    <li><form action="/games/sort-by-score"><label><a><button type="submit">Лучшие</button></a></label></form></li>
+                                    <li><form action="/games/indie"><label><a><button type="submit">Инди</button></a></label></form></li>
                                 </ul>
                             </div>
                         </div>
@@ -650,6 +583,7 @@
 
     <!-- Main Js -->
     <script th:src="@{/js/main.js}"></script>
+
 </body>
 
 </html>

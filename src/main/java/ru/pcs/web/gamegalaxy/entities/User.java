@@ -5,20 +5,21 @@ import lombok.*;
 import javax.persistence.*;
 
 @Data
+@EqualsAndHashCode(of = {"firstName", "lastName"})
+@ToString(of = {"firstName", "lastName"})
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 public class User {
 
     public enum Role {
         ADMIN, USER
     }
+
     @Enumerated(value = EnumType.STRING)
-
     private Role role;
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

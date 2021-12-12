@@ -11,6 +11,7 @@ import ru.pcs.web.gamegalaxy.dto.GameDto;
 import ru.pcs.web.gamegalaxy.services.GameService;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -80,9 +81,16 @@ public class GamesController {
         return "shop";
     }
 
-    @GetMapping("/games/{game-developer}")
-    public String getGamesByDeveloper(@PathVariable("game-developer") String developer, Model model) {
-        List<GameDto> gameListDto = gameService.getAllGamesByDeveloper(developer.replaceAll("_", " "));
+    @GetMapping("/games/by-developer")
+    public String getGamesByDeveloper(String developer, Model model) {
+        List<GameDto> gameListDto = gameService.getAllGamesByDeveloper(developer);
+        model.addAttribute("allGames", gameListDto);
+        return "shop";
+    }
+
+    @GetMapping("/games/by-publisher")
+    public String getGamesByPublisher(String publisher, Model model) {
+        List<GameDto> gameListDto = gameService.getAllGamesByPublisher(publisher);
         model.addAttribute("allGames", gameListDto);
         return "shop";
     }
@@ -111,6 +119,38 @@ public class GamesController {
     @GetMapping("/games/sort-by-genre")
     public String sortByGenre(String genre, Model model) {
         List<GameDto> gameDtoList = gameService.getAllGamesWithGenre(genre);
+        model.addAttribute("allGames", gameDtoList);
+        return "shop";
+    }
+
+    @GetMapping("/games/sort-by-score")
+    public String sortByGenre(Model model) {
+        List<GameDto> gameDtoList = gameService.getTopGamesByOverallScore();
+        model.addAttribute("allGames", gameDtoList);
+        return "shop";
+    }
+
+    @GetMapping("/games/newer")
+    public String getNewGamesPage(Model model, LocalDate date) {
+        List<GameDto> gameDtoList = gameService.getGamesWithDateNewerThan(date);
+        model.addAttribute("allGames", gameDtoList);
+        return "shop";
+    }
+
+    @GetMapping("/games/indie")
+    public String getIndieGamesPage(Model model) {
+        List<GameDto> gameDtoList = gameService.getIndieGames();
+        model.addAttribute("allGames", gameDtoList);
+        return "shop";
+    }
+
+    @GetMapping("/games/search")
+    public String findGamesByName(Model model, String searchQuery) {
+        List<GameDto> gameDtoList = gameService.getGamesByName(searchQuery);
+        if (gameDtoList.size() == 1) {
+            model.addAttribute("game", gameDtoList.get(0));
+            return "redirect:/games/gamepage/" + gameDtoList.get(0).getId();
+        }
         model.addAttribute("allGames", gameDtoList);
         return "shop";
     }

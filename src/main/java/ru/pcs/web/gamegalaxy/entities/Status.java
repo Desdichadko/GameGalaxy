@@ -13,5 +13,6 @@ public enum Status {
 
     @Getter
     private final String code;
+
 }
 

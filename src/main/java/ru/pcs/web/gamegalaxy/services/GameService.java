@@ -9,6 +9,7 @@ import ru.pcs.web.gamegalaxy.repositories.GamesRepository;
 
 import java.io.File;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -138,7 +139,27 @@ public class GameService {
         return asDto(gamesRepository.findAllByDeveloperIgnoreCase(developer));
     }
 
+    public List<GameDto> getAllGamesByPublisher(String publisher){
+        return asDto(gamesRepository.findAllByPublisherIgnoreCase(publisher));
+    }
+
     public List<GameDto> getGamesInPriceRange(BigDecimal lPrice, BigDecimal hPrice) {
         return asDto(gamesRepository.findAllByPriceIsGreaterThanEqualAndPriceIsLessThanEqual(lPrice,hPrice));
+    }
+
+    public List<GameDto> getTopGamesByOverallScore() {
+        return asDto(gamesRepository.findFirst9ByOverallScoreIsGreaterThanOrderByOverallScoreDesc(70.));
+    }
+
+    public List<GameDto> getGamesWithDateNewerThan(LocalDate date) {
+        return asDto(gamesRepository.findAllByReleaseDateIsGreaterThanEqualOrderByReleaseDateDesc(date));
+    }
+
+    public List<GameDto> getIndieGames(){
+        return asDto(gamesRepository.findAllByIsIndieIs(true));
+    }
+
+    public List<GameDto> getGamesByName(String searchQuery) {
+        return asDto(gamesRepository.findAllByNameContainsIgnoreCase(searchQuery));
     }
 }

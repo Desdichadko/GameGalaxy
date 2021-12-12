@@ -58,7 +58,7 @@
                 <!-- Header Logo Start -->
                 <div class="col-auto align-self-center">
                     <div class="header-logo">
-                        <a th:href="shop.html"><img th:src="@{/images/logo/logo.png}" alt="Site Logo" /></a>
+                        <a href="/games"><img th:src="@{/images/logo/logo.png}" alt="Site Logo" /></a>
                     </div>
                 </div>
                 <!-- Header Logo End -->
@@ -523,13 +523,17 @@
                         </div>
 <!--                        <p class="quickview-para">Lorem ipsum dolor sit amet, consectetur adipisic elit eiusm tempor incidid ut labore et dolore magna aliqua. Ut enim ad minim venialo quis nostrud exercitation ullamco</p>-->
                         <div class="pro-details-quality">
-                            <div class="cart-plus-minus">
-                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1" />
-                            </div>
-                            <div class="pro-details-cart">
-                                <button class="add-cart btn btn-primary btn-hover-primary ml-4" href="#"> Add To
-                                    Cart</button>
-                            </div>
+                                <form>
+                               <input type="text" name="strGameId" th:value="${game.id}" hidden>
+                                <div class="cart-plus-minus">
+                                    <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1"/>
+                                </div>
+                                <div style="display: inline-block; vertical-align: top" class="pro-details-cart">
+                                    <button class="add-cart btn btn-primary btn-hover-primary ml-4" formaction="/cart/change-item-value" formmethod="post" type="submit">В
+                                        корзину
+                                    </button>
+                                </div>
+                                </form>
                         </div>
                         <div class="pro-details-wish-com">
                             <div class="pro-details-wishlist">
@@ -728,7 +732,10 @@
                                     <a href="compare.html" class="action compare" title="Compare"><i
                                             class="icon-refresh"></i></a>
                                 </div>-->
-                                <button title="Add To Cart" class="add-to-cart">В корзину</button>
+                                <form action="/add-to-cart" method="post">
+                                    <input type="text" hidden name="strGameId" th:value="${relatedGame.id}">
+                                    <button title="Add To Cart" type="submit" class=" add-to-cart">В корзину</button>
+                                </form>
                             </div>
                             <div class="content">
                                 <h5 class="title"><a th:href="@{/games/gamepage/{id}(id=${relatedGame.id})}"><th:block th:text="${relatedGame.name}"/></a></h5>
@@ -759,7 +766,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="section-title text-left mb-11">
-                        <h2 class="title" th:text="'Ещё игры от' + ${game.developer}"></h2>
+                        <h2 class="title" th:text="'Ещё игры от ' + ${game.developer}"></h2>
                     </div>
                 </div>
             </div>
@@ -780,7 +787,10 @@
                                 <span class="new">New</span>
                                 </span>-->
 
-                                <button title="Add To Cart" class=" add-to-cart">В корзину</button>
+                                <form action="/add-to-cart" method="post">
+                                    <input type="text" hidden name="strGameId" th:value="${sameDeveloperGame.id}">
+                                    <button title="Add To Cart" type="submit" class=" add-to-cart">В корзину</button>
+                                </form>
                             </div>
                             <div class="content">
                                 <h5 class="title"><a th:href="@{/games/gamepage/{id}(id=${sameDeveloperGame.id})}" th:text="${sameDeveloperGame.name}"></a></h5>

@@ -6,6 +6,8 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@ToString(of = {"name", "price"})
+@EqualsAndHashCode(of = {"name", "game_id"})
 @Entity
 @Data
 @Getter
@@ -26,6 +28,7 @@ public class Game {
 
     private String poster;
 
+    @Column(length = 3000)
     private String description;
 
     private String platforms;
@@ -74,4 +77,8 @@ public class Game {
     private Double freeMemory;
 
 
+    public Game(String name, BigDecimal price) {
+        this.name = name;
+        this.price = price;
+    }
 }

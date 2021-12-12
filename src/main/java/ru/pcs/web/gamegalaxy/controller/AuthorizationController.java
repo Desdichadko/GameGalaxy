@@ -19,7 +19,7 @@ public class AuthorizationController {
     @PostMapping( "/sign-up")
     public String signUp(UserDto userDto){
         authorizationService.signUpUser(userDto);
-        return "redirect:/authorization";
+        return "redirect:/sign-in";
     }
 
     @GetMapping("/sign-in")
