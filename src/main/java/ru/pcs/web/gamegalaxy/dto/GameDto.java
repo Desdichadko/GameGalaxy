@@ -6,10 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.lang.Nullable;
 
-import java.io.File;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,7 +21,7 @@ public class GameDto {
     private Long id;
     private String name;
     private String price;
-    private File poster;
+    private String posterFileName;
     private String description;
     private String platformPS4;
     private String platformPS5;
@@ -46,16 +44,22 @@ public class GameDto {
     private String freeMemory;
 
 
+    @Nullable
     public BigDecimal getPrice() {
         return StringUtils.isBlank(price) ? null : new BigDecimal(price);
     }
 
+    @Nullable
     public String getDescription() {
         return getStringValueOrNull(description);
     }
 
-    // TODO: realise converter https://www.baeldung.com/jpa-attribute-converters
-    public String getPlatforms(){
+    /**
+     * Packs platforms boolean into one String with separator "|"
+     * @return String platforms or null
+     */
+    @Nullable
+    public String getPlatforms() {
         StringBuilder result = new StringBuilder();
         List<String> listOfPlatforms = new ArrayList<>();
         if (getStringValueOrNull(platformPS4) != null) {
@@ -67,91 +71,116 @@ public class GameDto {
         if (getStringValueOrNull(platformPC) != null) {
             listOfPlatforms.add(platformPC);
         }
-        for (int i = 0; i < listOfPlatforms.size()-1; i++) {
+        for (int i = 0; i < listOfPlatforms.size() - 1; i++) {
             result.append(listOfPlatforms.get(i)).append("|");
         }
-        if (listOfPlatforms.size()>0) {
-            result.append(listOfPlatforms.get(listOfPlatforms.size()-1));
+        if (listOfPlatforms.size() > 0) {
+            result.append(listOfPlatforms.get(listOfPlatforms.size() - 1));
         }
         return StringUtils.isBlank(result) ? null : result.toString();
     }
 
-    public String getYoutubeLink(){
+    @Nullable
+    public String getYoutubeLink() {
         return getStringValueOrNull(youtubeLink);
     }
 
-    public Boolean getIsIndie(){
+    public Boolean getIsIndie() {
         return isIndie != null ? isIndie : false;
     }
 
+    @Nullable
     public Double getMcScore() {
         return getDoubleValueOrNull(mcScore);
     }
 
+    @Nullable
     public Double getUserScore() {
         return getDoubleValueOrNull(userScore);
     }
 
+    @Nullable
     public Double getOverallScore() {
-        if (getUserScore() == null) {
+        if (getUserScore() != null && getMcScore() != null) {
+            return (getMcScore() + getUserScore()) / 2;
+        } else if (getMcScore() != null) {
             return getMcScore();
+        } else if (getUserScore() != null) {
+            return getUserScore();
         }
-        return (getMcScore() + getUserScore())/2;
+        return null;
     }
 
+    @Nullable
     public String getDeveloper() {
         return getStringValueOrNull(developer);
     }
 
+    @Nullable
     public String getPublisher() {
         return getStringValueOrNull(publisher);
     }
 
+    @Nullable
     public String getSetting() {
         return getStringValueOrNull(setting);
     }
 
+    @Nullable
     public String getMainGenre() {
         return getStringValueOrNull(mainGenre);
     }
 
+    @Nullable
     public String getSideGenre1() {
         return getStringValueOrNull(sideGenre1);
     }
 
+    @Nullable
     public String getSideGenre2() {
         return getStringValueOrNull(sideGenre2);
     }
 
+    @Nullable
     public String getProcessor() {
         return getStringValueOrNull(processor);
     }
 
+    @Nullable
     public String getGraphicsCard() {
         return getStringValueOrNull(graphicsCard);
     }
 
+    @Nullable
     public Integer getRam() {
-       return StringUtils.isBlank(ram) ? null : Integer.parseInt(ram);
+        return StringUtils.isBlank(ram) ? null : Integer.parseInt(ram);
     }
 
-    public @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate getReleaseDate() {
+    public @DateTimeFormat(pattern = "yyyy-MM-dd")
+    LocalDate getReleaseDate() {
         return releaseDate;
     }
 
+    @Nullable
     public Double getFreeMemory() {
         return getDoubleValueOrNull(freeMemory);
     }
 
-    public String getPoster() {
-        return poster.getName();
-    }
 
-
+    /**
+     * Tries to get some information from String or returns null
+     */
+    @Nullable
     private String getStringValueOrNull(String string) {
         return StringUtils.isBlank(string) ? null : string;
     }
 
+    /**
+     * Tries to parse Double from String or returns null
+     * @param string String to be parsed
+     * @return Double or Null
+     */
+    @Nullable
     private Double getDoubleValueOrNull(String string) {
         return StringUtils.isBlank(string) ? null : Double.parseDouble(string);
     }

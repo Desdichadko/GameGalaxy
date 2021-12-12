@@ -13,7 +13,7 @@
     <button type="submit">Назад к списку игр</button>
 </form>
 <br>
-<form method="post" action="/admin/add-new-game">
+<form method="post" action="/admin/add-new-game" enctype="multipart/form-data">
     <label>Название:
         <input required style="width: 400px" name="name" placeholder="The Last of Us">
     </label>
@@ -29,7 +29,7 @@
     <br>
     <br>
     <label>Цена:
-        <input required style="width: 50px" name="price" placeholder="59.99"> $
+        <input required style="width: 50px" name="price" placeholder="59.99"> руб.
     </label>
     <label style="margin-left: 30px">Платформа:
         <label>PS4
@@ -48,7 +48,7 @@
     <br>
     <br>
     <label>Путь к файлу с постером:
-        <input required type="file" accept="image/*" name="poster">
+        <input required type="file" accept="image/*" name="poster" >
     </label>
     <br>
     <br>

@@ -23,7 +23,8 @@ public class CartService {
 
     @Autowired
     public CartService(CartRepository cartRepository,
-                       GamesRepository gamesRepository, MyAccountService myAccountService) {
+                       GamesRepository gamesRepository,
+                       MyAccountService myAccountService) {
         this.cartRepository = cartRepository;
         this.gamesRepository = gamesRepository;
         this.myAccountService = myAccountService;
@@ -34,8 +35,7 @@ public class CartService {
         if (existingOrder != null) {
             existingOrder.addItem(gamesRepository.getById(gameId));
             recalculateTotalSum(existingOrder);
-        }
-        else {
+        } else {
             Order newOrder = new Order(myAccountService.getCurrentUser());
             newOrder.addItem(gamesRepository.getById(gameId));
             cartRepository.save(newOrder);
@@ -44,7 +44,11 @@ public class CartService {
     }
 
     public Order getActiveOrder() {
-        return cartRepository.findFirstByStatusAndUserIs(Status.NEW, myAccountService.getCurrentUser());
+        Order activeOrder = cartRepository.findFirstByStatusAndUserIs(Status.NEW, myAccountService.getCurrentUser());
+        if (activeOrder == null) {
+            activeOrder = new Order(myAccountService.getCurrentUser());
+        }
+        return activeOrder;
     }
 
     public Map<Game, Integer> getCurrentOrderItems() {
@@ -65,7 +69,7 @@ public class CartService {
 
     public void changeItemValueInOrder(long id, int quantity) {
         Order currentOrder = getActiveOrder();
-        currentOrder.changeItemValue(gamesRepository.getById(id),quantity);
+        currentOrder.changeItemValue(gamesRepository.getById(id), quantity);
         recalculateTotalSum(currentOrder);
     }
 
@@ -78,16 +82,5 @@ public class CartService {
         Order currentOrder = getActiveOrder();
         currentOrder.setStatus(Status.PROCESSING);
         cartRepository.save(currentOrder);
-    }
-
-    public Map<Game, Integer> getEmptyCart() {
-        Game game = Game.builder()
-                .name("Пустая корзина")
-                .price(BigDecimal.ZERO)
-                .poster("")
-                .build();
-        Map<Game, Integer> emptyCart = new HashMap<>();
-        emptyCart.put(game, 0);
-        return emptyCart;
     }
 }

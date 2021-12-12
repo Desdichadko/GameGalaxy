@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <title th:text="${gameDto.getName()}"></title>
 </head>
+
+<style>
+    img {
+        width: 20%;
+    }
+</style>
+
+
 <body>
 <h1>Подробная информация об игре:</h1>
 <h2 th:text="${gameDto.getName()}"></h2>
@@ -11,7 +19,7 @@
     <button type="submit">Назад к списку игр</button>
 </form>
 <br>
-<form method="post" th:action="@{/admin/games/{id}/details/update(id=${gameDto.getId()})}">
+<form method="post" th:action="@{/admin/games/{id}/details/update(id=${gameDto.getId()})}" enctype="multipart/form-data">
     <label>Название:
         <input required style="width: 400px" name="name" th:value="${gameDto.getName()}">
         <input hidden name="id" th:value="${gameDto.getId()}">
@@ -29,7 +37,7 @@
     <br>
     <br>
     <label>Цена:
-        <input required style="width: 50px" name="price" th:value="${gameDto.getPrice()}"> $
+        <input required style="width: 50px" name="price" th:value="${gameDto.getPrice()}"> руб.
     </label>
     <label style="margin-left: 30px">Платформа:
         <label>PS4
@@ -47,11 +55,11 @@
     </label>
     <br>
     <br>
-    <label>Путь к файлу с постером:
+    <label>Текущий постер:
         <br>
-        <input style="width: 500px" disabled type="text" th:value="${gameDto.getPoster()}">
+        <img th:src="@{/files/{fileName}(fileName=${gameDto.posterFileName})}">
         <br>Выбрать новый постер:
-        <input required type="file" name="poster" accept="image/*">
+        <input type="file" name="poster" accept="image/*">
     </label>
     <br>
     <br>

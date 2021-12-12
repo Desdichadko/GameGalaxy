@@ -5,8 +5,8 @@ import lombok.*;
 import javax.persistence.*;
 
 @Data
-@EqualsAndHashCode(of = {"firstName", "lastName"})
-@ToString(of = {"firstName", "lastName"})
+@EqualsAndHashCode(of = {"id","email"})
+@ToString(of = {"firstName", "email"})
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -36,9 +36,4 @@ public class User {
 
     @Column(nullable = false)
     private String hashPassword;
-
-    public User(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
 }

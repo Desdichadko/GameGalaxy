@@ -3,9 +3,7 @@ package ru.pcs.web.gamegalaxy.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import ru.pcs.web.gamegalaxy.dto.UserDto;
 import ru.pcs.web.gamegalaxy.services.AuthorizationService;
 
@@ -15,15 +13,14 @@ public class AuthorizationController {
 
     private final AuthorizationService authorizationService;
 
-
-    @PostMapping( "/sign-up")
-    public String signUp(UserDto userDto){
+    @PostMapping("/sign-up")
+    public String signUp(UserDto userDto) {
         authorizationService.signUpUser(userDto);
         return "redirect:/sign-in";
     }
 
     @GetMapping("/sign-in")
-    public String getAuthorizationPage(){
+    public String getAuthorizationPage() {
         return "login";
     }
 

@@ -464,7 +464,7 @@
                     <div class="swiper-container zoom-top">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
-                                <img class="img-responsive m-auto" th:src="@{/images/product-image/zoom-image/{fileName}(fileName=${game.poster})}" alt="">
+                                <img class="img-responsive m-auto" th:src="@{/files/{fileName}(fileName=${game.posterFileName})}" alt="">
                             </div>
                             <!--<div class="swiper-slide zoom-image-hover">
                                 <img class="img-responsive m-auto" src="assets/images/product-image/zoom-image/2.jpg" alt="">
@@ -717,8 +717,8 @@
                         <div class="product">
                             <div class="thumb">
                                 <a th:href="@{/games/gamepage/{id}(id=${relatedGame.id})}" class="image">
-                                    <img th:src="@{/images/product-image/zoom-image/{fileName}(fileName=${relatedGame.poster})}" alt="Product" />
-                                    <img class="hover-image" th:src="@{/images/product-image/zoom-image/{fileName}(fileName=${relatedGame.poster})}" alt="Product" />
+                                    <img th:src="@{/files/{fileName}(fileName=${relatedGame.posterFileName})}" alt="Product" />
+<!--                                    <img class="hover-image" th:src="@{/files/{fileName}(fileName=${relatedGame.posterFileName})}" alt="Product" />-->
                                 </a>
 <!--                                <span class="badges">
                                     <span class="sale">-10%</span>
@@ -779,8 +779,8 @@
                         <div class="product">
                             <div class="thumb">
                                 <a th:href="@{/games/gamepage/{id}(id=${sameDeveloperGame.id})}" class="image">
-                                    <img th:src="@{/images/product-image/zoom-image/{fileName}(fileName=${sameDeveloperGame.poster})}" alt="Product" />
-                                    <img class="hover-image" th:src="@{/images/product-image/zoom-image/{fileName}(fileName=${sameDeveloperGame.poster})}" alt="Product" />
+                                    <img th:src="@{/files/{fileName}(fileName=${sameDeveloperGame.posterFileName})}" alt="Product" />
+<!--                                    <img class="hover-image" th:src="@{/images/product-image/zoom-image/{fileName}(fileName=${sameDeveloperGame.posterFileName})}" alt="Product" />-->
                                 </a>
 <!--                                <span class="badges">
                                     <span class="sale">-10%</span>

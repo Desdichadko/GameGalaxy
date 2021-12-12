@@ -36,7 +36,7 @@ public class Order {
     private Map<Game, Integer> items = new HashMap<>();
 
     @Setter
-    @Column(name="total_sum")
+    @Column(name = "total_sum")
     private BigDecimal totalSum;
 
     public Order(User user) {
@@ -44,10 +44,13 @@ public class Order {
         this.totalSum = BigDecimal.ZERO;
     }
 
-    public void calculateTotalSum(){
-        Map<Game,Integer> currentOrderItems = getItems();
+    /**
+     * Calculates total sum of an active order
+     */
+    public void calculateTotalSum() {
+        Map<Game, Integer> currentOrderItems = getItems();
         BigDecimal sum = new BigDecimal("0.");
-        for (Map.Entry<Game, Integer> item: currentOrderItems.entrySet()) {
+        for (Map.Entry<Game, Integer> item : currentOrderItems.entrySet()) {
             sum = sum.add(item.getKey().getPrice().multiply(BigDecimal.valueOf(Long.parseLong(item.getValue().toString()))));
         }
         setTotalSum(sum);
@@ -61,23 +64,16 @@ public class Order {
         items.merge(item, 1, (v1, v2) -> v1 + v2);
     }
 
-
-/*    public void changeItemValue(Game item) {
-        items.computeIfPresent(item, (k, v) -> v > 1 ? v - 1 : null);
-    }*/
-
     public void removeItem(Game item) {
         items.remove(item);
     }
 
+    /**
+     * Changes quantity of an item or add new one
+     * @param item cart item Game
+     * @param value quantity
+     */
     public void changeItemValue(Game item, int value) {
         items.put(item, value);
     }
-
-
-//    public BigDecimal getTotalSum() {
-//        calculateTotalSum();
-//        return totalSum;
-//    }
-
 }

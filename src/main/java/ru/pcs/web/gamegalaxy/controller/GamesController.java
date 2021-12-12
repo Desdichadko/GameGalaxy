@@ -7,7 +7,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import ru.pcs.web.gamegalaxy.dto.GameDto;
+import ru.pcs.web.gamegalaxy.services.FilesService;
 import ru.pcs.web.gamegalaxy.services.GameService;
 
 import java.math.BigDecimal;
@@ -18,10 +21,12 @@ import java.util.List;
 public class GamesController {
 
     private final GameService gameService;
+    private final FilesService filesService;
 
     @Autowired
-    public GamesController(GameService gameService) {
+    public GamesController(GameService gameService, FilesService filesService) {
         this.gameService = gameService;
+        this.filesService = filesService;
     }
 
     // Admin pages
@@ -32,15 +37,16 @@ public class GamesController {
         return "admin-list-of-games";
     }
 
-    @PostMapping("/admin/add-new-game")
-    public String addGame(GameDto gameDto) {
-        gameService.addNewGame(gameDto);
-        return "redirect:/admin/add-new-game";
+    @GetMapping("/admin/add-new-game")
+    public String getAddNewGamePage() {
+        return "admin-add-new-game";
     }
 
-    @GetMapping("/admin/add-new-game")
-    public String getAddNewGamePage(){
-        return "admin-add-new-game";
+    @PostMapping("/admin/add-new-game")
+    public String addGame(GameDto gameDto, @RequestParam("poster") MultipartFile multipartFile) {
+        gameDto.setPosterFileName(filesService.saveFile(multipartFile));
+        gameService.addNewGame(gameDto);
+        return "redirect:/admin/add-new-game";
     }
 
     @PostMapping("/admin/games/{game-id}/delete")
@@ -57,14 +63,20 @@ public class GamesController {
     }
 
     @PostMapping("/admin/games/{game-id}/details/update")
-    public String updateGameInfo(@PathVariable("game-id") Long game_id, GameDto gameDto){
-        gameService.updateGameInfo(gameDto);
+    public String updateGameInfo(GameDto gameDto, @RequestParam("poster") MultipartFile multipartFile) {
+        boolean isPosterUpdated = false;
+        if (!multipartFile.isEmpty()) {
+            gameDto.setPosterFileName(filesService.saveFile(multipartFile));
+            isPosterUpdated = true;
+        }
+        gameService.updateGameInfo(gameDto, isPosterUpdated);
         return "redirect:/admin/games/{game-id}/details/";
     }
 
-    // User pages
+
+    // User pages:
     @GetMapping("/games/gamepage/{game-id}")
-    public String getGamePage(@PathVariable("game-id") Long game_id, Model model){
+    public String getGamePage(@PathVariable("game-id") Long game_id, Model model) {
         GameDto game = gameService.getGameByIdAsDTO(game_id);
         List<GameDto> relatedGames = gameService.getGamesByGenreExceptId(game.getMainGenre(), game_id);
         List<GameDto> sameDeveloperGames = gameService.getGamesByDeveloper(game.getDeveloper(), game_id);
@@ -75,12 +87,14 @@ public class GamesController {
     }
 
     @GetMapping("/games")
-    public String getAllGamesPage(Model model){
+    public String getAllGamesPage(Model model) {
         List<GameDto> allGames = gameService.getAllGames();
         model.addAttribute("allGames", allGames);
         return "shop";
     }
 
+
+    // Pages with sort:
     @GetMapping("/games/by-developer")
     public String getGamesByDeveloper(String developer, Model model) {
         List<GameDto> gameListDto = gameService.getAllGamesByDeveloper(developer);
@@ -96,22 +110,20 @@ public class GamesController {
     }
 
     @GetMapping("/games/sort-by-price")
-    public String sortByPrice(String lowestPrice, String highestPrice, Model model){
+    public String sortByPrice(String lowestPrice, String highestPrice, Model model) {
         BigDecimal lPrice;
         BigDecimal hPrice;
         if (Strings.isBlank(lowestPrice)) {
             lPrice = BigDecimal.ZERO;
-        }
-        else {
+        } else {
             lPrice = BigDecimal.valueOf(Double.parseDouble(lowestPrice));
         }
         if (Strings.isBlank(highestPrice)) {
             hPrice = BigDecimal.valueOf(100_000.);
-        }
-        else {
+        } else {
             hPrice = BigDecimal.valueOf(Double.parseDouble(highestPrice));
         }
-        List<GameDto> gameDtoList = gameService.getGamesInPriceRange(lPrice,hPrice);
+        List<GameDto> gameDtoList = gameService.getGamesInPriceRange(lPrice, hPrice);
         model.addAttribute("allGames", gameDtoList);
         return "shop";
     }
@@ -144,6 +156,7 @@ public class GamesController {
         return "shop";
     }
 
+    // Searching bar
     @GetMapping("/games/search")
     public String findGamesByName(Model model, String searchQuery) {
         List<GameDto> gameDtoList = gameService.getGamesByName(searchQuery);

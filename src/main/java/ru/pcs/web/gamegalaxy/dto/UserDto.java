@@ -12,7 +12,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class UserDto {
+    @NotNull
     private String firstName;
+    @NotNull
     private String lastName;
     @NotNull
     private String email;

@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.pcs.web.gamegalaxy.services.CartService;
-import ru.pcs.web.gamegalaxy.services.MyAccountService;
-
-
 
 @Controller
 public class CartController {
@@ -17,21 +14,21 @@ public class CartController {
     private final CartService cartService;
 
     @Autowired
-    public CartController(CartService cartService, MyAccountService myAccountService) {
+    public CartController(CartService cartService) {
         this.cartService = cartService;
+    }
+
+    @GetMapping("/cart")
+    public String getCartPage(Model model) {
+        model.addAttribute("order", cartService.getCurrentOrderItems());
+        model.addAttribute("totalSum", cartService.getActiveOrder().getTotalSum());
+        return "cart";
     }
 
     @PostMapping("/add-to-cart")
     public String addItemToCart(String strGameId) {
         cartService.addItem(Long.parseLong(strGameId));
         return "redirect:/games";
-    }
-
-    @GetMapping("/cart")
-    public String getCartPage(Model model){
-        model.addAttribute("order", cartService.getCurrentOrderItems());
-        model.addAttribute("totalSum", cartService.getActiveOrder().getTotalSum());
-        return "cart";
     }
 
     @PostMapping("/cart/remove-item")
@@ -51,6 +48,4 @@ public class CartController {
         cartService.payment();
         return "redirect:/games";
     }
-
-
 }
