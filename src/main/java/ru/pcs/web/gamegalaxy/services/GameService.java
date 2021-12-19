@@ -36,7 +36,7 @@ public class GameService {
      */
     private Game buildGameFromDto(GameDto gameDto) {
         return Game.builder()
-                .id(gameDto.getId())
+                .gameId(gameDto.getGameId())
                 .name(gameDto.getName())
                 .price(gameDto.getPrice())
                 .poster(gameDto.getPosterFileName())
@@ -68,7 +68,7 @@ public class GameService {
      * @param isPosterUpdated should be true if it is needed to update poster as well
      */
     public void updateGameInfo(GameDto gameDto, boolean isPosterUpdated) {
-        Game game = gamesRepository.getById(gameDto.getId());
+        Game game = gamesRepository.getById(gameDto.getGameId());
         game.setName(gameDto.getName());
         game.setPrice(gameDto.getPrice());
         game.setDescription(gameDto.getDescription());
@@ -136,7 +136,7 @@ public class GameService {
      */
     private GameDto toDto(Game game){
         return GameDto.builder()
-                .id(game.getId())
+                .gameId(game.getGameId())
                 .name(game.getName())
                 .price(game.getPrice().toString())
                 .posterFileName(game.getPoster())
@@ -180,11 +180,11 @@ public class GameService {
      * @return List of GameDto
      */
     public List<GameDto> getGamesByGenreExceptId(String genre, Long id) {
-        return asDto(gamesRepository.findAllByMainGenreAndIdIsNot(genre,id));
+        return asDto(gamesRepository.findAllByMainGenreAndGameIdIsNot(genre,id));
     }
 
     public List<GameDto> getGamesByDeveloper(String developer, Long id) {
-        return asDto(gamesRepository.findAllByDeveloperAndIdIsNot(developer, id));
+        return asDto(gamesRepository.findAllByDeveloperAndGameIdIsNot(developer, id));
     }
 
     public List<GameDto> getAllGamesWithGenre(String genre) {

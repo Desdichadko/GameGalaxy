@@ -408,7 +408,7 @@
 <!--                        <p class="quickview-para">Lorem ipsum dolor sit amet, consectetur adipisic elit eiusm tempor incidid ut labore et dolore magna aliqua. Ut enim ad minim venialo quis nostrud exercitation ullamco</p>-->
                         <div class="pro-details-quality">
                                 <form>
-                               <input type="text" name="strGameId" th:value="${game.id}" hidden>
+                               <input type="text" name="strGameId" th:value="${game.getGameId}" hidden>
                                 <div class="cart-plus-minus">
                                     <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1"/>
                                 </div>
@@ -477,7 +477,7 @@
                         <div class="row">
                             <div class="col-lg-7">
                                 <div class="review-wrapper">
-                                    <div class="single-review">
+                                    <div class="single-review" th:each="review: ${reviews}">
                                         <div class="review-img">
                                             <img th:src="@{/images/review-image/1.png}" alt="" />
                                         </div>
@@ -485,7 +485,7 @@
                                             <div class="review-top-wrap">
                                                 <div class="review-left">
                                                     <div class="review-name">
-                                                        <h4>White Lewis</h4>
+                                                        <h4><th:block th:text="${review.user.getFirstName()} + ' ' + ${review.user.getLastName()}"></th:block></h4>
                                                     </div>
                                                     <div class="rating-product">
                                                         <i class="ion-android-star"></i>
@@ -500,13 +500,12 @@
                                                 </div>
                                             </div>
                                             <div class="review-bottom">
-                                                <p>
-                                                    Vestibulum ante ipsum primis aucibus orci luctustrices posuere cubilia Curae Suspendisse viverra ed viverra. Mauris ullarper euismod vehicula. Phasellus quam nisi, congue id nulla.
+                                                <p> <th:block th:text="${review.reviewBody}"></th:block>
                                                 </p>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="single-review child-review">
+                                   <!-- <div class="single-review child-review">
                                         <div class="review-img">
                                             <img src="#" alt="" />
                                         </div>
@@ -532,7 +531,7 @@
                                                 <p>Vestibulum ante ipsum primis aucibus orci luctustrices posuere cubilia Curae Sus pen disse viverra ed viverra. Mauris ullarper euismod vehicula.</p>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>-->
                                 </div>
                             </div>
                             <div class="col-lg-5">
@@ -551,20 +550,15 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="rating-form-style">
-                                                        <input placeholder="Name" type="text" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="rating-form-style">
-                                                        <input placeholder="Email" type="email" />
-                                                    </div>
-                                                </div>
                                                 <div class="col-md-12">
                                                     <div class="rating-form-style form-submit">
-                                                        <textarea name="Your Review" placeholder="Message"></textarea>
-                                                        <button class="btn btn-primary btn-hover-color-primary " type="submit" value="Submit">Submit</button>
+                                                        <form>
+                                                            <input hidden name="gameId" th:value="${game.gameId}">
+                                                            <textarea name="reviewBody" placeholder="Отзыв"></textarea>
+                                                            <button class="btn btn-primary btn-hover-color-primary "
+                                                                    type="submit" formmethod="post" formaction="/add-review" value="Submit">Отправить
+                                                            </button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -600,7 +594,7 @@
                     <div class="new-product-item swiper-slide">
                         <div class="product">
                             <div class="thumb">
-                                <a th:href="@{/games/gamepage/{id}(id=${relatedGame.id})}" class="image">
+                                <a th:href="@{/games/gamepage/{id}(id=${relatedGame.getGameId})}" class="image">
                                     <img th:src="@{/files/{fileName}(fileName=${relatedGame.posterFileName})}" alt="Product" />
 <!--                                    <img class="hover-image" th:src="@{/files/{fileName}(fileName=${relatedGame.posterFileName})}" alt="Product" />-->
                                 </a>
@@ -617,12 +611,12 @@
                                             class="icon-refresh"></i></a>
                                 </div>-->
                                 <form action="/add-to-cart" method="post">
-                                    <input type="text" hidden name="strGameId" th:value="${relatedGame.id}">
+                                    <input type="text" hidden name="strGameId" th:value="${relatedGame.getGameId}">
                                     <button title="Add To Cart" type="submit" class=" add-to-cart">В корзину</button>
                                 </form>
                             </div>
                             <div class="content">
-                                <h5 class="title"><a th:href="@{/games/gamepage/{id}(id=${relatedGame.id})}"><th:block th:text="${relatedGame.name}"/></a></h5>
+                                <h5 class="title"><a th:href="@{/games/gamepage/{id}(id=${relatedGame.getGameId})}"><th:block th:text="${relatedGame.name}"/></a></h5>
                                 <span class="price">
                                     <span class="new" th:text="${relatedGame.price} + ' руб.'"></span>
 <!--                                <span class="old">$28.50</span>-->
@@ -662,7 +656,7 @@
                     <div class="new-product-item swiper-slide">
                         <div class="product">
                             <div class="thumb">
-                                <a th:href="@{/games/gamepage/{id}(id=${sameDeveloperGame.id})}" class="image">
+                                <a th:href="@{/games/gamepage/{id}(id=${sameDeveloperGame.getGameId})}" class="image">
                                     <img th:src="@{/files/{fileName}(fileName=${sameDeveloperGame.posterFileName})}" alt="Product" />
 <!--                                    <img class="hover-image" th:src="@{/images/product-image/zoom-image/{fileName}(fileName=${sameDeveloperGame.posterFileName})}" alt="Product" />-->
                                 </a>
@@ -672,12 +666,12 @@
                                 </span>-->
 
                                 <form action="/add-to-cart" method="post">
-                                    <input type="text" hidden name="strGameId" th:value="${sameDeveloperGame.id}">
+                                    <input type="text" hidden name="strGameId" th:value="${sameDeveloperGame.getGameId}">
                                     <button title="Add To Cart" type="submit" class=" add-to-cart">В корзину</button>
                                 </form>
                             </div>
                             <div class="content">
-                                <h5 class="title"><a th:href="@{/games/gamepage/{id}(id=${sameDeveloperGame.id})}" th:text="${sameDeveloperGame.name}"></a></h5>
+                                <h5 class="title"><a th:href="@{/games/gamepage/{id}(id=${sameDeveloperGame.getGameId})}" th:text="${sameDeveloperGame.name}"></a></h5>
                                 <span class="price">
                                     <span class="new" th:text="${sameDeveloperGame.price} + ' руб.'"></span>
 <!--                                <span class="old">$28.50</span>-->

@@ -335,13 +335,13 @@
                                 <form>
                                     <tr>
                                         <td class="product-thumbnail">
-                                            <a th:href="@{/games/gamepage/{id}(id=${item.getKey().id})}"><img
+                                            <a th:href="@{/games/gamepage/{id}(id=${item.getKey().getGameId})}"><img
                                                     class="img-responsive ml-3"
                                                     th:src="@{/files/{fileName}(fileName=${item.getKey().poster})}"
                                                     alt=""/></a>
                                         </td>
                                         <td class="product-name"><a
-                                                th:href="@{/games/gamepage/{id}(id=${item.getKey().id})}"
+                                                th:href="@{/games/gamepage/{id}(id=${item.getKey().getGameId})}"
                                                 th:text="${item.getKey().name}">Product Name</a></td>
                                         <td class="product-price-cart" th:text="${item.getKey().price} + ' руб.'"><span
                                                 class="amount">$60.00</span></td>
@@ -356,7 +356,7 @@
                                         </td>
                                         <td class="product-remove">
                                             <label>
-                                                <input type="text" name="strGameId" th:value="${item.getKey().id}"
+                                                <input type="text" name="strGameId" th:value="${item.getKey().getGameId}"
                                                        hidden>
                                                 <a href="#">
                                                     <button formaction="/cart/change-item-value" formmethod="post"

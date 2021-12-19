@@ -1,6 +1,8 @@
 package ru.pcs.web.gamegalaxy.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.pcs.web.gamegalaxy.dto.UserDto;
@@ -24,5 +26,14 @@ public class AuthorizationServiceImpl implements AuthorizationService {
                 .hashPassword(passwordEncoder.encode(userDto.getPassword()))
                 .build();
         userRepository.save(user);
+    }
+
+    public User getCurrentUser() {
+        return userRepository.findUserByEmail(getCurrentUsername());
+    }
+
+    public String getCurrentUsername() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth.getName();
     }
 }

@@ -18,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class GameDto {
-    private Long id;
+    private Long gameId;
     private String name;
     private String price;
     private String posterFileName;

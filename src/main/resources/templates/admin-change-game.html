@@ -19,10 +19,10 @@
     <button type="submit">Назад к списку игр</button>
 </form>
 <br>
-<form method="post" th:action="@{/admin/games/{id}/details/update(id=${gameDto.getId()})}" enctype="multipart/form-data">
+<form method="post" th:action="@{/admin/games/{id}/details/update(id=${gameDto.getGameId()})}" enctype="multipart/form-data">
     <label>Название:
         <input required style="width: 400px" name="name" th:value="${gameDto.getName()}">
-        <input hidden name="id" th:value="${gameDto.getId()}">
+        <input hidden name="id" th:value="${gameDto.getGameId()}">
     </label>
     <br>
     <br>

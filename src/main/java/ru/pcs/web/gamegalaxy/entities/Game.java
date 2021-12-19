@@ -19,7 +19,7 @@ public class Game {
     @Id
     @Column(name = "game_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long gameId;
 
     private String name;
 

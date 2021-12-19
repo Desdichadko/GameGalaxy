@@ -1,5 +1,6 @@
 package ru.pcs.web.gamegalaxy.services;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,22 +14,15 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @Transactional
 @Service
 public class CartService {
 
     private final CartRepository cartRepository;
     private final GamesRepository gamesRepository;
-    private final MyAccountService myAccountService;
+    private final AuthorizationServiceImpl authorizationService;
 
-    @Autowired
-    public CartService(CartRepository cartRepository,
-                       GamesRepository gamesRepository,
-                       MyAccountService myAccountService) {
-        this.cartRepository = cartRepository;
-        this.gamesRepository = gamesRepository;
-        this.myAccountService = myAccountService;
-    }
 
     public void addItem(Long gameId) {
         Order existingOrder = getActiveOrder();
@@ -36,7 +30,7 @@ public class CartService {
             existingOrder.addItem(gamesRepository.getById(gameId));
             recalculateTotalSum(existingOrder);
         } else {
-            Order newOrder = new Order(myAccountService.getCurrentUser());
+            Order newOrder = new Order(authorizationService.getCurrentUser());
             newOrder.addItem(gamesRepository.getById(gameId));
             cartRepository.save(newOrder);
             recalculateTotalSum(newOrder);
@@ -44,9 +38,9 @@ public class CartService {
     }
 
     public Order getActiveOrder() {
-        Order activeOrder = cartRepository.findFirstByStatusAndUserIs(Status.NEW, myAccountService.getCurrentUser());
+        Order activeOrder = cartRepository.findFirstByStatusAndUserIs(Status.NEW, authorizationService.getCurrentUser());
         if (activeOrder == null) {
-            activeOrder = new Order(myAccountService.getCurrentUser());
+            activeOrder = new Order(authorizationService.getCurrentUser());
         }
         return activeOrder;
     }
@@ -55,7 +49,7 @@ public class CartService {
         try {
             return getActiveOrder().getItems();
         } catch (NullPointerException ignore) {
-            Order newOrder = new Order(myAccountService.getCurrentUser());
+            Order newOrder = new Order(authorizationService.getCurrentUser());
             cartRepository.save(newOrder);
             return getActiveOrder().getItems();
         }

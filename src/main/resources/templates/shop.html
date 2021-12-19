@@ -454,18 +454,18 @@
                             <!-- Single Product -->
                             <div class="product mb-5">
                                 <div class="thumb">
-                                    <a th:href="@{/games/gamepage/{id}(id=${game.id})}" class="image">
+                                    <a th:href="@{/games/gamepage/{id}(id=${game.getGameId})}" class="image">
                                         <img th:src="@{/files/{fileName}(fileName=${game.posterFileName})}"
                                              alt="Product"/>
                                     </a>
                                     <form action="/add-to-cart" method="post">
-                                        <input type="text" hidden name="strGameId" th:value="${game.id}">
+                                        <input type="text" hidden name="strGameId" th:value="${game.getGameId}">
                                         <button title="Add To Cart" type="submit" class=" add-to-cart">В корзину
                                         </button>
                                     </form>
                                 </div>
                                 <div class="content">
-                                    <h5 class="title"><a th:href="@{/games/gamepage/{id}(id=${game.id})}"
+                                    <h5 class="title"><a th:href="@{/games/gamepage/{id}(id=${game.getGameId})}"
                                                          th:text="${game.name}"></a></h5>
                                     <span class="price">
                                             <span class="new" th:text="${game.price} + ' руб.'"></span>

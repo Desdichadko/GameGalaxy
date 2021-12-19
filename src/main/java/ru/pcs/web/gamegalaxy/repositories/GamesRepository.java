@@ -10,9 +10,9 @@ import java.util.List;
 
 public interface GamesRepository extends JpaRepository<Game, Long> {
 
-    List<Game> findAllByDeveloperAndIdIsNot(String developer, Long id);
+    List<Game> findAllByDeveloperAndGameIdIsNot(String developer, Long id);
 
-    List<Game> findAllByMainGenreAndIdIsNot(String genre, Long id);
+    List<Game> findAllByMainGenreAndGameIdIsNot(String genre, Long id);
 
     List<Game> findAllByDeveloperIgnoreCase(String developer);
 

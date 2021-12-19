@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.pcs.web.gamegalaxy.dto.UserDto;
+import ru.pcs.web.gamegalaxy.services.AuthorizationServiceImpl;
 import ru.pcs.web.gamegalaxy.services.MyAccountService;
 
 @RequiredArgsConstructor
@@ -15,10 +16,11 @@ import ru.pcs.web.gamegalaxy.services.MyAccountService;
 public class MyAccountController {
 
     private final MyAccountService myAccountService;
+    private final AuthorizationServiceImpl authorizationService;
 
     @GetMapping
     public String getMyAccountPage(Model model) {
-        model.addAttribute("user", myAccountService.getCurrentUser());
+        model.addAttribute("user", authorizationService.getCurrentUser());
         return "my-account";
     }
 

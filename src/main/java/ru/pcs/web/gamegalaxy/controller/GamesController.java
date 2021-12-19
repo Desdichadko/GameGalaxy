@@ -1,7 +1,7 @@
 package ru.pcs.web.gamegalaxy.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,24 +10,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import ru.pcs.web.gamegalaxy.dto.GameDto;
+import ru.pcs.web.gamegalaxy.dto.ReviewDto;
 import ru.pcs.web.gamegalaxy.services.FilesService;
 import ru.pcs.web.gamegalaxy.services.GameService;
+import ru.pcs.web.gamegalaxy.services.ReviewService;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Controller
 public class GamesController {
 
     private final GameService gameService;
     private final FilesService filesService;
+    private final ReviewService reviewService;
 
-    @Autowired
-    public GamesController(GameService gameService, FilesService filesService) {
-        this.gameService = gameService;
-        this.filesService = filesService;
-    }
 
     // Admin pages
     @GetMapping("/admin/games")
@@ -76,13 +75,15 @@ public class GamesController {
 
     // User pages:
     @GetMapping("/games/gamepage/{game-id}")
-    public String getGamePage(@PathVariable("game-id") Long game_id, Model model) {
-        GameDto game = gameService.getGameByIdAsDTO(game_id);
-        List<GameDto> relatedGames = gameService.getGamesByGenreExceptId(game.getMainGenre(), game_id);
-        List<GameDto> sameDeveloperGames = gameService.getGamesByDeveloper(game.getDeveloper(), game_id);
+    public String getGamePage(@PathVariable("game-id") Long gameId, Model model) {
+        GameDto game = gameService.getGameByIdAsDTO(gameId);
+        List<GameDto> relatedGames = gameService.getGamesByGenreExceptId(game.getMainGenre(), gameId);
+        List<GameDto> sameDeveloperGames = gameService.getGamesByDeveloper(game.getDeveloper(), gameId);
+        List<ReviewDto> reviews = reviewService.getAllGameReviews(gameId);
         model.addAttribute("game", game);
         model.addAttribute("relatedGames", relatedGames);
         model.addAttribute("sameDeveloperGames", sameDeveloperGames);
+        model.addAttribute("reviews", reviews);
         return "single-product";
     }
 
@@ -162,7 +163,7 @@ public class GamesController {
         List<GameDto> gameDtoList = gameService.getGamesByName(searchQuery);
         if (gameDtoList.size() == 1) {
             model.addAttribute("game", gameDtoList.get(0));
-            return "redirect:/games/gamepage/" + gameDtoList.get(0).getId();
+            return "redirect:/games/gamepage/" + gameDtoList.get(0).getGameId();
         }
         model.addAttribute("allGames", gameDtoList);
         return "shop";
