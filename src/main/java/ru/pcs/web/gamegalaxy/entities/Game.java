@@ -7,7 +7,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Data
+@EqualsAndHashCode(of = {"id", "name", "price"})
+@ToString(of = {"id", "name", "price"})
 @Getter
 @Setter
 @Builder
@@ -18,7 +19,7 @@ public class Game {
     @Id
     @Column(name = "game_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long gameId;
 
     private String name;
 
@@ -26,6 +27,7 @@ public class Game {
 
     private String poster;
 
+    @Column(length = 3000)
     private String description;
 
     private String platforms;
@@ -72,6 +74,4 @@ public class Game {
 
     @Column(name = "free_memory")
     private Double freeMemory;
-
-
 }

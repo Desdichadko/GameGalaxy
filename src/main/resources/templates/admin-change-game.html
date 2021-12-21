@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${gameDto.getName()}"></title>
+</head>
+
+<style>
+    img {
+        width: 20%;
+    }
+</style>
+
+
+<body>
+<h1>Подробная информация об игре:</h1>
+<h2 th:text="${gameDto.getName()}"></h2>
+<form action="/admin/games/">
+    <button type="submit">Назад к списку игр</button>
+</form>
+<br>
+<form method="post" th:action="@{/admin/games/{id}/details/update(id=${gameDto.getGameId()})}" enctype="multipart/form-data">
+    <label>Название:
+        <input required style="width: 400px" name="name" th:value="${gameDto.getName()}">
+        <input hidden name="id" th:value="${gameDto.getGameId()}">
+    </label>
+    <br>
+    <br>
+    <label>Оценка Metacritic:
+        <input style="width: 30px;margin-right: 30px" name="mcScore" th:value="${gameDto.getMcScore()}">
+    </label>
+    <label>Инди:
+        <input type="checkbox" th:checked="${gameDto.getIsIndie()}" id="isIndie" name="isIndie"
+               th:value="${gameDto.getIsIndie()}">
+        <label for="isIndie"> </label>
+    </label>
+    <br>
+    <br>
+    <label>Цена:
+        <input required style="width: 50px" name="price" th:value="${gameDto.getPrice()}"> руб.
+    </label>
+    <label style="margin-left: 30px">Платформа:
+        <label>PS4
+            <input type="checkbox" th:checked="${gameDto.getPlatformPS4}" id="platformPS4" name="platformPS4" value="PS4">
+            <label for="platformPS4"> </label>
+        </label>
+        <label>PS5
+            <input type="checkbox" th:checked="${gameDto.getPlatformPS5}" id="platformPS5" name="platformPS5" value="PS5">
+            <label for="platformPS5"> </label>
+        </label>
+        <label>PC
+            <input type="checkbox" th:checked="${gameDto.getPlatformPC}" id="platformPC" name="platformPC" value="PC">
+            <label for="platformPC"> </label>
+        </label>
+    </label>
+    <br>
+    <br>
+    <label>Текущий постер:
+        <br>
+        <img th:src="@{/files/{fileName}(fileName=${gameDto.posterFileName})}">
+        <br>Выбрать новый постер:
+        <input type="file" name="poster" accept="image/*">
+    </label>
+    <br>
+    <br>
+    <label>Описание:
+        <textarea style="width: 400px; height: 100px" name="description" th:text="${gameDto.getDescription()}"></textarea>
+    </label>
+    <br>
+    <br>
+    <label>Ссылка на встраиваемое видео YouTube:
+        <br>
+        <input style="width: 400px" name="youtubeLink" th:value="${gameDto.getYoutubeLink()}">
+    </label>
+    <br>
+    <br>
+    <label>Разработчик:
+        <input name="developer" th:value="${gameDto.getDeveloper()}">
+    </label>
+    <label>Издатель:
+        <input style="width: 200px" name="publisher" th:value="${gameDto.getPublisher()}">
+    </label>
+    <br>
+    <br>
+    <label>Дата релиза:
+        <input required type="date" pattern="dd-mm-yyyy" name="releaseDate" th:value="${gameDto.getReleaseDate()}">
+    </label>
+    <br>
+    <br>
+    <label>Сеттинг:
+        <input name="setting" th:value="${gameDto.getSetting()}">
+    </label>
+    <br>
+    <br>
+    <label>Основной жанр:
+        <input name="mainGenre" th:value="${gameDto.getMainGenre()}">
+    </label>
+    <br>
+    <br>
+    <label>Второстепенные жанры:
+        <input name="sideGenre1" th:value="${gameDto.getSideGenre1()}">
+        <input name="sideGenre2" th:value="${gameDto.getSideGenre2()}">
+    </label>
+    <br>
+    <br>
+    <h3>
+        Системные требования:
+    </h3>
+    <label>Процессор:
+        <input style="width: 400px" name="processor" th:value="${gameDto.getProcessor()}">
+    </label>
+    <br>
+    <br>
+    <label>Видеокарта:
+        <input style="width: 400px" name="graphicsCard" th:value="${gameDto.getGraphicsCard()}">
+    </label>
+    <br>
+    <br>
+    <label>Оперативная память:
+        <input style="width: 30px" name="ram" th:value="${gameDto.getRam()}">GB
+    </label>
+    <label style="margin-left: 30px">Место на диске:
+        <input style="width: 50px" name="freeMemory" th:value="${gameDto.getFreeMemory()}"> GB
+    </label>
+    <br>
+    <br>
+    <input type="submit" value="Сохранить изменения">
+</form>
+</body>
+</html>
