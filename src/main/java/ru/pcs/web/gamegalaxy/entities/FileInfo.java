@@ -18,6 +18,7 @@ public class FileInfo {
 
     private String originalName;
 
+    @Column(unique = true)
     private String storageName;
 
     private String mimeType;
