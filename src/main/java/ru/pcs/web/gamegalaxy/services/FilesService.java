@@ -9,4 +9,6 @@ public interface FilesService {
     void addFileToResponse(String fileName, HttpServletResponse response);
 
     String saveFile(MultipartFile multipartFile);
+
+    void deleteFile(String fileName);
 }

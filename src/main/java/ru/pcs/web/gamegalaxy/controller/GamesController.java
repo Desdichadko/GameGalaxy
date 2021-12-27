@@ -50,6 +50,7 @@ public class GamesController {
 
     @PostMapping("/admin/games/{game-id}/delete")
     public String deleteGame(@PathVariable("game-id") Long game_id) {
+        filesService.deleteFile(gameService.getGameById(game_id).getPoster());
         gameService.deleteGame(game_id);
         return "redirect:/admin/games";
     }
@@ -67,6 +68,7 @@ public class GamesController {
         if (!multipartFile.isEmpty()) {
             gameDto.setPosterFileName(filesService.saveFile(multipartFile));
             isPosterUpdated = true;
+            filesService.deleteFile(gameService.getGameById(gameDto.getGameId()).getPoster());
         }
         gameService.updateGameInfo(gameDto, isPosterUpdated);
         return "redirect:/admin/games/{game-id}/details/";

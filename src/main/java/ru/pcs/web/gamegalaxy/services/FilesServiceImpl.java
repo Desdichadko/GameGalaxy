@@ -58,6 +58,14 @@ public class FilesServiceImpl implements FilesService {
     }
 
     @Override
+    public void deleteFile(String storageFileName) {
+        try {
+            Files.delete(Paths.get(storageFolder, storageFileName));
+            filesInfoRepository.delete(filesInfoRepository.findByStorageName(storageFileName));
+        } catch (IOException ignore) {};
+    }
+
+    @Override
     public void addFileToResponse(String storageFileName, HttpServletResponse response) {
         FileInfo fileInfo = filesInfoRepository.findByStorageName(storageFileName);
         response.setContentType(fileInfo.getMimeType());
@@ -69,6 +77,8 @@ public class FilesServiceImpl implements FilesService {
             throw new IllegalArgumentException(e);
         }
     }
+
+
 
 
 }

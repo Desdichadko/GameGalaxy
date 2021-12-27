@@ -22,7 +22,7 @@
 <form method="post" th:action="@{/admin/games/{id}/details/update(id=${gameDto.getGameId()})}" enctype="multipart/form-data">
     <label>Название:
         <input required style="width: 400px" name="name" th:value="${gameDto.getName()}">
-        <input hidden name="id" th:value="${gameDto.getGameId()}">
+        <input hidden name="gameId" th:value="${gameDto.getGameId()}">
     </label>
     <br>
     <br>
