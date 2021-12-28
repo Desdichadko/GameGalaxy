@@ -17,8 +17,8 @@ import java.util.UUID;
 @Component
 public class FilesServiceImpl implements FilesService {
 
-    @Value("${files.storage.path}")
-    private String storageFolder;
+//    @Value("${files.storage.path}")
+    private String storageFolder = "Storage/images/";
 
     private final FilesInfoRepository filesInfoRepository;
 
@@ -51,7 +51,6 @@ public class FilesServiceImpl implements FilesService {
         try {
             Files.copy(multipartFile.getInputStream(), Paths.get(storageFolder, fileName));
         } catch (IOException ex) {
-            fileName = null;
             throw new IllegalArgumentException();
         }
         return fileName;
