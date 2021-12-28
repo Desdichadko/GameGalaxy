@@ -1,1 +1,1 @@
-This is storage for posters
+This is storage for game posters.

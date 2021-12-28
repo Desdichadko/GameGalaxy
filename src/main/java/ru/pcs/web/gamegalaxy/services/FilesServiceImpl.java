@@ -51,7 +51,6 @@ public class FilesServiceImpl implements FilesService {
         try {
             Files.copy(multipartFile.getInputStream(), Paths.get(storageFolder, fileName));
         } catch (IOException ex) {
-            fileName = null;
             throw new IllegalArgumentException();
         }
         return fileName;
