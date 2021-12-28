@@ -145,9 +145,9 @@ public class GamesController {
         return "shop";
     }
 
-    @GetMapping("/games/newer")
-    public String getNewGamesPage(Model model, LocalDate date) {
-        List<GameDto> gameDtoList = gameService.getGamesWithDateNewerThan(date);
+    @GetMapping("/games/newest")
+    public String getNewGamesPage(Model model, String date) {
+        List<GameDto> gameDtoList = gameService.getGamesWithDateNewerThan(LocalDate.parse(date));
         model.addAttribute("allGames", gameDtoList);
         return "shop";
     }
