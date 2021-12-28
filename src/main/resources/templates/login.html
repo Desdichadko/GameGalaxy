@@ -326,8 +326,8 @@
                             <div class="login-form-container">
                                 <div class="login-register-form">
                                     <form action="/sign-in" method="post">
-                                        <input type="text" name="email" placeholder="E-mail"/>
-                                        <input type="password" name="password" placeholder="Пароль"/>
+                                        <input type="email" required name="email" placeholder="E-mail"/>
+                                        <input type="password" required name="password" placeholder="Пароль"/>
                                         <div class="button-box">
                                             <div class="login-toggle-btn">
                                                 <input type="checkbox"/>
@@ -344,10 +344,10 @@
                             <div class="login-form-container">
                                 <div class="login-register-form">
                                     <form action="/sign-up" method="post">
-                                        <input type="text" name="firstName" placeholder="Имя"/>
-                                        <input type="text" name="lastName" placeholder="Фамилия"/>
-                                        <input type="email" name="email" placeholder="E-mail"/>
-                                        <input type="password" name="password" placeholder="Пароль"/>
+                                        <input type="text" required name="firstName" placeholder="Имя"/>
+                                        <input type="text" required name="lastName" placeholder="Фамилия"/>
+                                        <input type="email" required name="email" placeholder="E-mail"/>
+                                        <input type="password" required name="password" placeholder="Пароль"/>
                                         <div class="button-box">
                                             <button type="submit"><span>Регистрация</span></button>
                                         </div>
